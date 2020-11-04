@@ -1,0 +1,54 @@
+﻿<!--category-productsr-->
+
+ @model IEnumerable<BookShopping.Models.ShoppingModel.Category>
+
+
+    <form asp-controller="Category" asp-action="Create" method="post">
+        <h1>KAtegori Ekle</h1>
+        <label>Kategori Adı:</label>
+        <input type="text" name="Name" value="" />
+    </form>
+
+    @*<form asp-controller="Category" asp-action="Index" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kod</th>
+                    <th>Kategori Adı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>*@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                @foreach (var item in Model)
+                {
+                    <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </a>
+                }
+                </h4>
+        </div>
+        <div id="sportswear" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li><a href="#">Nike </a></li>
+                    <li><a href="#">Under Armour </a></li>
+                    <li><a href="#">Adidas </a></li>
+                    <li><a href="#">Puma</a></li>
+                    <li><a href="#">ASICS </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>

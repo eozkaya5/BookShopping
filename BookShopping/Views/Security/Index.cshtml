@@ -1,0 +1,118 @@
+﻿@model BookShopping.Models.ViewModel.UserModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login | E-Shopper</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/css/price-range.css" rel="stylesheet">
+    <link href="~/css/animate.css" rel="stylesheet">
+    <link href="~/css/main.css" rel="stylesheet">
+    <link href="~/css/responsive.css" rel="stylesheet"> 
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<body>
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                                <li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                                <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                                <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+        <div class="logo pull-left">
+            <h3><img src="~/images/home/book.png" alt="" />"Kitapları seviyor musunuz öyleyse hayatınız boyunca mutlu olacaksınız demektir."</h3>
+        </div>
+    </header><!--/header-->
+    <section id="form">
+        <!--form-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-1">
+                    <div class="login-form">
+                        <!--login form-->
+                        <h2>Giriş Yap</h2>
+                        <div asp-validation-summary="All"></div>
+                        <form asp-action="Login" asp-controller="Security">
+                            <input type="email" placeholder="E-Posta" asp-for="Email" />
+                            <input type="text" placeholder="Şifre" value="" asp-for="Password" />
+
+                            <span>
+                                <input type="checkbox" class="checkbox">
+                                Keep me signed in
+                            </span>
+                            <button type="submit" class="btn btn-default">Giriş Yap</button>
+                        </form>
+                    </div><!--/login form-->
+                </div>
+                <div class="col-sm-1">
+                    <h2 class="or">VEYA</h2>
+                </div>
+                <div class="col-sm-4">
+                    <div class="signup-form">
+                        <!--sign up form-->
+                        <h2>Yeni Kayıt!</h2>
+                        <div asp-validation-summary="All"></div>
+                        <form asp-action="Register" asp-controller="Security">
+                            <input type="text" placeholder="Ad" asp-for="Name" />
+                            <input type="text" placeholder="Soyad" asp-for="SurName" value="" />
+                            <input type="text" placeholder="Kullanıcı Adı" asp-for="UserName" />
+                            <input type="text" placeholder="E-posta" asp-for="Email" />
+                            <input type="text" placeholder="Şifre" asp-for="Password" />
+                            <button type="submit" class="btn btn-default">Kaydet</button>
+                        </form>
+                    </div><!--/sign up form-->
+                </div>
+            </div>
+        </div>
+    </section><!--/form-->
+
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <p class="pull-left">Copyright © 2020  Tüm Haklar Saklıdır.</p>
+                <p class="pull-right">KiTapEvi</p>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/price-range.js"></script>
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.prettyPhoto.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>

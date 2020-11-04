@@ -1,0 +1,23 @@
+﻿@model BookShopping.Models.ShoppingModel.Product
+
+@{ Layout = null; }
+<h1>Ürün Ekle</h1>
+<br />
+<form asp-controller="Product" asp-action="Create" method="post">
+   
+    <input type="hidden" name="CategoryId" />
+    <div>
+        <label>Ürün Adı:</label>
+        <input type="text" name="Name" class="form-control" value="" required />
+    </div>
+    <div>
+        <label>resim:</label>
+        <input type="image" asp-for="Pictures" class="form-control" value="" required />
+    </div>
+    <div>
+        <label>resim:</label>
+        <input type="text" asp-for="Price" class="form-control" value="" required />
+    </div>
+    <button>ekle</button>
+    <br />
+</form>
