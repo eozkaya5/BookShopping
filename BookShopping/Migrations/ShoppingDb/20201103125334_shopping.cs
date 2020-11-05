@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookShopping.Migrations.ShoppingDb
 {
-    public partial class shopping : Migration
+    public partial class shopping : Migration 
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
