@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookShopping.Models.ViewModel
 {
-    public class ResetPasswordModel
+    public class ResetPasswordModel 
     {
         [Required(ErrorMessage ="Lütfen E-posta adresini boş geçmeyiniz.")]
         [DataType(DataType.EmailAddress, ErrorMessage ="Lütfen uygun formatta e-posta giriniz.")]

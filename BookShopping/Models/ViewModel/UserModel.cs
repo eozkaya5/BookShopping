@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShopping.Models.ViewModel
+namespace BookShopping.Models.ViewModel 
 {
     public class UserModel
     {

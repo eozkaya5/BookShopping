@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShopping.Models.Authentication
+namespace BookShopping.Models.Authentication 
 {
     public class AppUser:IdentityUser<int>
     { 
