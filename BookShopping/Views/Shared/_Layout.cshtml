@@ -45,11 +45,8 @@
                     <div class="col-sm-6">
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href=""><i class="fa fa-user"></i>@ViewBag.UserName</a></li>
+                                <li><a asp-action="Logout" asp-controller="Security"><i class="fa fa-lock"></i> Çıkış Yap</a></li>
                             </ul>
                         </div>
                     </div>
@@ -70,10 +67,9 @@
                     <div class="col-md-8 clearfix">
                         <div class="shop-menu clearfix pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a asp-area="" asp-controller="Home" asp-action="Index" class="fa fa-crosshairs">Anasayfa</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Contact" class="fa fa-star">İletişim</a></li>
-                                <li><a href=""><i class="fa fa-user"></i>@ViewBag.UserName</a></li>
-                                <li><a asp-action="Logout" asp-controller="Security"><i class="fa fa-lock"></i> Çıkış Yap</a></li>
+                                <li><a asp-controller="Home" asp-action="Index" ><i class="fa fa-home" ></i>Anasayfa</a></li>
+                                <li><a asp-controller="Home" asp-action="Contact" ><i class="fa fa-star"></i>İletişim</a></li>
+                                <li><a asp-controller="Category" asp-action="Index"><i class="fa fa-crosshairs"></i>Kategori</a></li>                              
                             </ul>
                         </div>
                     </div>
@@ -117,7 +113,7 @@
                 <div class="col-sm-3">
                     <div class="left-sidebar">
 
-                        @*  @Html.Partial("~/Views/Category/Index.cshtml")*@
+                        @*@Html.Partial("~/Views/Category/Index.cshtml")*@
 
                     </div><!--/category-products-->
 
