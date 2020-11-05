@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShopping.Models.ShoppingModel
+namespace BookShopping.Models.ShoppingModel 
 {
     public class Payment
     {
