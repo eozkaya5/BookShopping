@@ -1,54 +1,80 @@
-﻿<!--category-productsr-->
+﻿
+@model IEnumerable<BookShopping.Models.ShoppingModel.Category>
 
- @model IEnumerable<BookShopping.Models.ShoppingModel.Category>
+<form asp-controller="Category" asp-action="Create" method="post">
+    <h1>Kategori Ekle</h1>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" name="Id" />
 
+    <b>Kategori Adı</b>
+    <input name="Name" type="text" class="form-control" />
 
-    <form asp-controller="Category" asp-action="Create" method="post">
-        <h1>KAtegori Ekle</h1>
-        <label>Kategori Adı:</label>
-        <input type="text" name="Name" value="" />
-    </form>
+    <a class="btn btn-default update" href="">Ekle</a>
+</form>
 
-    @*<form asp-controller="Category" asp-action="Index" method="post">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Kod</th>
-                    <th>Kategori Adı</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </form>*@
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                @foreach (var item in Model)
-                {
-                    <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </a>
-                }
-                </h4>
-        </div>
-        <div id="sportswear" class="panel-collapse collapse">
-            <div class="panel-body">
-                <ul>
-                    <li><a href="#">Nike </a></li>
-                    <li><a href="#">Under Armour </a></li>
-                    <li><a href="#">Adidas </a></li>
-                    <li><a href="#">Puma</a></li>
-                    <li><a href="#">ASICS </a></li>
-                </ul>
+<form asp-controller="Category" asp-action="Index" method="post">
+    <section id="cart_items">
+        <div class="container">
+
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Kod</th>
+                            <th>Kategori Adı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td><a asp-action="Delete" asp-route-id="@item.Id">Sil</a></td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+    </section>
+</form>
+
+@*<section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <div class="panel panel-default">
+                            <form asp-controller="Category" asp-action="Index" method="post">
+                                <div class="table-responsive cart_info">
+                                    <table class="table table-condensed">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Kategoriler</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a asp-action="Index" asp-controller="Product" asp-route-id="@item.Id">
+                                                                @item.Name
+                                                            </a>
+                                                            <a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>*@
