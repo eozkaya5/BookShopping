@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookShopping.Controllers
 {
     public class SecurityController : Controller
-    {
+    { 
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
         public SecurityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
