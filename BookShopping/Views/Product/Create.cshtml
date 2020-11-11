@@ -2,23 +2,27 @@
 
 <form asp-controller="Product" asp-action="Create" method="post">
 
-    <input type="hidden" />
+    <input type="hidden" asp-for="CategoryId" />
+
     <div>
         <label>Ürün Adı:</label>
-        <input type="text" name="Name" class="form-control" value="" required />
+        <input type="text" name="Name" class="form-control" required />
     </div>
-    <div>
-        <label>resim:</label>
-        <input type="file" name="Pictures" class="form-control" value="" required />
-    </div>
+    @* <div>*@
+    @*<label>resim:</label>
+            <input type="file" name="Pictures" class="form-control" required />
+        </div>*@
     <div>
         <label>Açıklama:</label>
-        <input type="text" name="Comment" class="form-control" value="" required />
+        <input type="text" name="Comment" class="form-control" required />
     </div>
     <div>
         <label>Fiyat:</label>
-        <input type="text" name="Price" class="form-control" value="" required />
+        <input type="number" name="Price" class="form-control" required />
     </div>
-    <button>ekle</button>
+    <button type="button" class="btn btn-fefault cart">
+        <i class="fa fa-check-square"></i>
+        Ürün ekle
+    </button>
     <br />
 </form>

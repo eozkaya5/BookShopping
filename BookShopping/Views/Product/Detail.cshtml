@@ -25,59 +25,59 @@
 </head><!--/head-->
 
 <body>
-  
-    <div class="col-sm-9 padding-right">
-        @foreach (var item in Model)
-        {
-            <div class="product-details">
-                <!--product-details-->
-                <div class="col-sm-5">
+    <form action="Detail" method="post">
+        <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId/>
+        <div class="col-sm-9 padding-right">
+            @foreach (var item in Model)
+            {
+                <div class="product-details">
+                    <!--product-details-->
+                    <div class="col-sm-5">
 
-                    <div class="view-product">
+                        <div class="view-product">
 
-                        @Html.DisplayFor(modelItem => item.Picture)
+                            @* @Html.DisplayFor(modelItem => item.Picture)*@
+
+                        </div>
 
                     </div>
 
-                </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
+                            <!--/product-information-->
+                            <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                            <h2>  @Html.DisplayFor(modelItem => item.Name)</h2>
+                            <span>
+                                <span>@Html.DisplayFor(modelItem => item.Price) ₺</span>
+                                <label>Miktar:</label>
+                                <input type="text" value="3" />
+                                <button type="button" class="btn btn-fefault cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    Sepete ekle
+                                </button>
+                            </span>
+                            @* <p><b>Stok Durumu:</b> @Html.DisplayFor(modelItem => item.Picture)</p>*@
+                            @* <p><b>Durum:</b> @Html.DisplayFor(modelItem => item.Picture)</p>*@
+                            <p><b>Marka:</b> </p>
+                            <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
+                        </div><!--/product-information-->
+                    </div>
+                    <div>
+                        <p>AÇIKLAMA</p>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                        </p>
+                        <!-- Controls -->
 
-                <div class="col-sm-7">
-                    <div class="product-information">
-                        <!--/product-information-->
-                        <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                        <h2>Şeker Portakalı</h2>
-                        <span>
-                            <span>15 ₺</span>
-                            <label>Miktar:</label>
-                            <input type="text" value="3" />
-                            <button type="button" class="btn btn-fefault cart">
-                                <i class="fa fa-shopping-cart"></i>
-                                Sepete ekle
-                            </button>
-                        </span>
-                        <p><b>Stok Durumu:</b> @Html.DisplayFor(modelItem => item.Picture)</p>
-                        <p><b>Durum:</b> @Html.DisplayFor(modelItem => item.Picture)</p>
-                        <p><b>Marka:</b> </p>
-                        <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
-                    </div><!--/product-information-->
-                </div>
-                <div>
-                    <p>AÇIKLAMA</p>
-                    <p>
-                        Yazarlıkta karar kılıncaya kadar, boks antrenörlüğünden ressam ve heykeltıraşlara modellik yapmaya, muz plantasyonlarında hamallıktan gece kulüplerinde garsonluğa kadar çeşitli işlerde çalışan Jose Mauro de Vasconcelos’un başyapıtı Şeker Portakalı, “günün birinde acıyı keşfeden küçük bir çocuğun öyküsü”dür.
-                        Çok yoksul bir ailenin oğlu olarak dünyaya gelen, dokuz yaşında yüzme öğrenirken bir gün yüzme şampiyonu olmanın hayalini kuran Vasconcelos’un çocukluğundan derin izler taşıyan Şeker Portakalı, yaşamın beklenmedik değişimleri karşısında büyük sarsıntılar yaşayan küçük Zeze’nin başından geçenleri anlatır.
-                        Vasconcelos, tam on iki günde yazdığı bu romanı “yirmi yıldan fazla bir zaman yüreğinde taşıdığını” söyler.
-                    </p>
-                    <!-- Controls -->
-
-                </div>
-            </div><!--/product-details-->
+                    </div>
+                </div><!--/product-details-->
 
 
-        }
+            }
 
 
-    </div>
+        </div>
+    </form>
         <script src="~/js/jquery.js"></script>
         <script src="~/js/price-range.js"></script>
         <script src="~/js/jquery.scrollUp.min.js"></script>
