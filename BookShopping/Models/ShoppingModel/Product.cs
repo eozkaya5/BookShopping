@@ -12,12 +12,12 @@ namespace BookShopping.Models.ShoppingModel
         public string Name { get; set; }
         public string Comment { get; set; }
         public decimal Price { get; set; }
-        public string Picture { get; set; }
+        //public string Picture { get; set; }
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
-        public List<Basket> Baskets { get; set; }
-        public List<Picture> Pictures { get; set; }
+        //public List<Basket> Baskets { get; set; }
+        //public List<Picture> Pictures { get; set; }
 
         
     }

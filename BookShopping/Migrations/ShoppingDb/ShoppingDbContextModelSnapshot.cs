@@ -204,9 +204,6 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -220,7 +217,7 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
                 {
                     b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
-                        .WithMany("Baskets")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -258,7 +255,7 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Picture", b =>
                 {
                     b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
-                        .WithMany("Pictures")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -295,13 +292,6 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Payment", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
-                {
-                    b.Navigation("Baskets");
-
-                    b.Navigation("Pictures");
                 });
 #pragma warning restore 612, 618
         }
