@@ -1,9 +1,7 @@
-﻿@model List<BookShopping.Models.ViewModel.RoleAssignViewModel>
+﻿@model List<BookShopping.Models.ViewModels.RoleAssignViewModel>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-
-
-<h1>Role Assign</h1>
+<h1>Rol Ata</h1>
 
 <form asp-action="RoleAssign" asp-controller="Role">
     <table class="table">
@@ -22,9 +20,9 @@
                 <tr>
                     <td><input type="checkbox" asp-for="@Model[i].HasAssign" /> </td>
                     <td>
-                        @Model[i].RoleName
-                        <input type="hidden" asp-for="@Model[i].RoleId" />
-                        <input type="hidden" asp-for="@Model[i].RoleName" />
+                        @Model[i].Name
+                        <input type="hidden" asp-for="@Model[i].Id" />
+                        <input type="hidden" asp-for="@Model[i].Name" />
                     </td>
                 </tr>
             }

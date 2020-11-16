@@ -1,0 +1,15 @@
+﻿@model BookShopping.Models.ViewModels.RoleViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<h4>Rol Oluştur</h4>
+
+<form asp-action="Create">   
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label>Kullanıcı Adı:</label>
+        <input type="text" name="Name" class="form-control" required />
+    </div>
+    <button> Rol ekle</button>
+</form>
+
