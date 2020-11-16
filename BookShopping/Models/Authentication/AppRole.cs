@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace BookShopping.Models.Authentication
 {
     public class AppRole:IdentityRole<int>
-    {       
+    {
+
+        public DateTime DateCreate { get; set; }
     }
 }
