@@ -12,6 +12,7 @@ namespace BookShopping.Models.ShoppingModel
         public string Piece { get; set; }
         public decimal Price { get; set; }
         public string Status { get; set; }
+        public DateTime Date { get; set; }
         public int UserId { get; set; }
         public int CargoId { get; set; }
         public int BasketId { get; set; }      

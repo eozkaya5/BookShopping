@@ -11,6 +11,7 @@ namespace BookShopping.Models.ShoppingModel
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Address { get; set; }
+        public DateTime Date { get; set; }
         public int UserId { get; set; }
     }
 }

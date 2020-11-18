@@ -58,6 +58,9 @@ namespace BookShopping.Migrations.ShoppingDb
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -72,6 +75,9 @@ namespace BookShopping.Migrations.ShoppingDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -90,6 +96,9 @@ namespace BookShopping.Migrations.ShoppingDb
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -117,6 +126,9 @@ namespace BookShopping.Migrations.ShoppingDb
 
                     b.Property<int>("CargoId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
@@ -200,6 +212,9 @@ namespace BookShopping.Migrations.ShoppingDb
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

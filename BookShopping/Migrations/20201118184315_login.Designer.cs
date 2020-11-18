@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopping.Migrations
 {
     [DbContext(typeof(LoginDbContext))]
-    [Migration("20201116191526_role")]
-    partial class role
+    [Migration("20201118184315_login")]
+    partial class login
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
