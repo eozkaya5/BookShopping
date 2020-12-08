@@ -1,0 +1,201 @@
+{
+  "import" { "Injectable" },
+  "from" "'@angular/core';",
+  "import" { "IProduct" },
+  "from" "'./data.service';",
+  "import" "*",
+  "as" "_",
+  "from" "'underscore';",
+  "import" "swal",
+  "from" "'sweetalert2';",
+
+  "@Injectable(" {
+    "providedIn": "root"
+  }
+  ")",
+  "export",
+  "class" "ShoppingCartService",
+  {
+
+    "constructor()" {
+      "this.getStorage();"
+    },
+
+    "shoppingCart": "IShoppingCart",
+    "=" "new",
+    "ShoppingCart();": null,
+
+    "add(product": "IProduct)",
+    {
+      "var": null,
+      "item": "IShoppingCartItem",
+      "=" "_.find(this.shoppingCart.items",
+      "(i": "IShoppingCartItem)",
+      "=>" {
+        "return" "i.product.id",
+        "===" "product.id"
+      }
+      ");",
+      "if",
+      "(item)" "item.quantity++;",
+      "else" {
+        "item" "=",
+        "new" "ShoppingCartItem(product);",
+        "this.shoppingCart.items.push(item);"
+      },
+      "swal.fire(" {
+        "type": "success",
+        "text": "\"",
+        "+" "item.product.name",
+        "+" "\" sepetinize eklendi.",
+        "confirmButtonText": "TAMAM"
+      }
+      ");",
+      "this.setStorage();"
+    },
+
+
+
+    "remove(item": "IShoppingCartItem)",
+    {
+      "swal.fire(" {
+        "type": "warning",
+        "text": "\"",
+        "+" "item.product.name",
+        "+" "\" isimli ürün sepetinizden çýkarýlacaktýr. Devam etmek istiyor musunuz?",
+        "confirmButtonText": "SÝL",
+        "showCancelButton": true,
+        "cancelButtonText": "ÝPTAL"
+      }
+      ").then((result)",
+      "=>",
+      {
+        "if" "(result.value)",
+        {
+          "this.shoppingCart.items" "=",
+          "_.without(this.shoppingCart.items",
+          "item);" "this.setStorage();"
+        }
+      }
+      ");",
+    },
+
+    "clear()" {
+      "swal.fire(" {
+        "type": "warning",
+        "text": "Sepetinizdeki tüm ürünler çýkarýlacaktýr. Devam etmek istiyor musunuz?",
+        "confirmButtonText": "TEMÝZLE",
+        "showCancelButton": true,
+        "cancelButtonText": "ÝPTAL"
+      }
+      ").then((result)",
+      "=>",
+      {
+        "if" "(result.value)",
+        {
+          "this.shoppingCart.items" "=",
+          []
+          ";",
+          "this.setStorage();"
+        }
+      }
+      ");",
+    },
+
+    "private" "setStorage()",
+    {
+      "localStorage.setItem('shoppingCart'",
+      "JSON.stringify(this.shoppingCart.items));"
+    },
+    "private" "getStorage()",
+    {
+      "var" "items",
+      "=" "JSON.parse(localStorage.getItem('shoppingCart'))",
+      "||" []
+      ";",
+      "for",
+      "(var" "i",
+      "=" "0;",
+      "i" "<",
+      "items.length;" "i++)",
+      {
+        "items" [ "i" ]
+        ".amount",
+        "=",
+        "items" [ "i" ]
+        ".product.price",
+        "*",
+        "items" [ "i" ]
+        ".quantity;",
+        "this.shoppingCart.items.push(items",
+        [ "i" ]
+        ");",
+      }
+    }
+
+  },
+
+  "export" "interface",
+  "IShoppingCartItem" {
+    "product": "IProduct",
+    "quantity": "number",
+    "amount": "number"
+  },
+
+  "export" "class",
+  "ShoppingCartItem" "implements",
+  "IShoppingCartItem" {
+
+    "constructor(product": "IProduct",
+    "quantity": "number",
+    "=" "1)",
+    {
+      "this.product" "=",
+      "product;" "this.quantity",
+      "=" "quantity;"
+    },
+
+
+    "product": "IProduct;",
+    "quantity": "number;",
+
+    "get": null,
+    "amount()": "number",
+    {
+      "return" "this.product.price",
+      "*" "this.quantity;"
+    }
+  },
+
+  "export" "interface",
+  "IShoppingCart" {
+    "items": "IShoppingCartItem",
+    []
+    ";",
+    : null,
+    "total": "number"
+  },
+
+  "export" "class",
+  "ShoppingCart" "implements",
+  "IShoppingCart" {
+    "items": "IShoppingCartItem",
+    [],
+    "=" []
+    ";",
+    "get",
+    "total()": "number",
+    {
+      "return" "_.reduce(this.items",
+      "(m": "number",
+      "i": "IShoppingCartItem)",
+      "=>" {
+        "return" "m",
+        "+" "i.amount"
+      },
+      "0);"
+    }
+  }
+
+}
+
