@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace BookShopping.Models.Context
 {
     public class ShoppingDbContext: DbContext
@@ -20,6 +19,7 @@ namespace BookShopping.Models.Context
         public DbSet<Information> Informations { get; set; }
         public DbSet<Cargo> Cargos { get; set; } 
         public DbSet<Picture> Pictures { get; set; }
+       
     }
    
 }

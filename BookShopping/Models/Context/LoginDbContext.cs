@@ -11,5 +11,6 @@ namespace BookShopping.Models.Context
     public class LoginDbContext:IdentityDbContext<AppUser, AppRole, int>
     {
         public LoginDbContext(DbContextOptions<LoginDbContext>options) : base(options) { } 
+
     }
 }

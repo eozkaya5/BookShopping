@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace BookShopping.Models.ShoppingModel 
 {
     public class Information
@@ -13,5 +14,7 @@ namespace BookShopping.Models.ShoppingModel
         public string Address { get; set; }
         public DateTime Date { get; set; }
         public int UserId { get; set; }
+
+       
     }
 }

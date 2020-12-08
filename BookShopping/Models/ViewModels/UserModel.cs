@@ -12,8 +12,7 @@ namespace BookShopping.Models.ViewModel
         public int Id { get; set; }      
         public string Name { get; set; }
         public string SurName { get; set; }
-        [Required(ErrorMessage ="Lütfen kullanıcı adını boş geçmeyiniz.")]
-        [Display(Name ="UserName")]
+       
         public string UserName { get; set; }
         [Required(ErrorMessage = "Lütfen e-posta adresini boş geçmeyiniz.")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Lütfen uygun formatta e-posta adresi giriniz.")]
@@ -23,8 +22,11 @@ namespace BookShopping.Models.ViewModel
         [DataType(DataType.Password , ErrorMessage ="Lütfen uygun formatta şifre giriniz.")]
         [Display(Name ="Password")]
         public string Password { get; set; }
+        public string Address { get; set; }
         [Display(Name = "Beni Hatırla")]
         public bool Persistent { get; set; }
         public int MyProperty { get; set; }
+
+
     }
 }

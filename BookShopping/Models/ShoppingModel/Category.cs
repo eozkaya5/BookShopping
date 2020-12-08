@@ -10,7 +10,7 @@ namespace BookShopping.Models.ShoppingModel
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        public string UseId { get; set; }
+        public int UserId { get; set; }
         public List<Product> Products { get; set; }
     }
   

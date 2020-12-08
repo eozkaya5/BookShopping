@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShopping.Models.ShoppingModel 
+namespace BookShopping.Models.ShoppingModel
 {
     public class Order
     {
         public int Id { get; set; }
-        public string Product { get; set; }
-        public string Piece { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string Status { get; set; }
         public DateTime Date { get; set; }
-        public int UserId { get; set; }
+
         public int CargoId { get; set; }
-        public int BasketId { get; set; }      
+        public int BasketId { get; set; }
         public int PaymentId { get; set; }
 
         public Cargo Cargo { get; set; }
