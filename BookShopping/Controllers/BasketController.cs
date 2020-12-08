@@ -35,13 +35,7 @@ namespace BookShopping.Controllers
             }
             ViewBag.ProductId = id;
             return View(model);
-        }
-        public ActionResult List(int id)
-        {
-            List<Basket> model = _context.Baskets.Include(x => x.Product).ToList();
-            ViewBag.ProductId = id;
-            return View(model);
-        }
+        }       
         //[Route("Basket/Index/{id}")]
         public IActionResult Create(int id)
         {
