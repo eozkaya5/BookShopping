@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookShopping.Migrations.ShoppingDb
 {
-    public partial class shopping : Migration
+    public partial class shop : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,8 @@ namespace BookShopping.Migrations.ShoppingDb
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,20 +54,6 @@ namespace BookShopping.Migrations.ShoppingDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalFee = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -74,9 +61,12 @@ namespace BookShopping.Migrations.ShoppingDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,12 +85,13 @@ namespace BookShopping.Migrations.ShoppingDb
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Piece = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,17 +126,37 @@ namespace BookShopping.Migrations.ShoppingDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Product = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Piece = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BasketId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Baskets_BasketId",
+                        column: x => x.BasketId,
+                        principalTable: "Baskets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: true)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     CargoId = table.Column<int>(type: "int", nullable: false),
                     BasketId = table.Column<int>(type: "int", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false)
@@ -170,7 +181,9 @@ namespace BookShopping.Migrations.ShoppingDb
                         column: x => x.PaymentId,
                         principalTable: "Payments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onUpdate: ReferentialAction.Cascade);
+            //onDelete: ReferentialAction.Cascade);
+                   
                 });
 
             migrationBuilder.CreateIndex(
@@ -192,6 +205,11 @@ namespace BookShopping.Migrations.ShoppingDb
                 name: "IX_Orders_PaymentId",
                 table: "Orders",
                 column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_BasketId",
+                table: "Payments",
+                column: "BasketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pictures_ProductId",
@@ -216,13 +234,13 @@ namespace BookShopping.Migrations.ShoppingDb
                 name: "Pictures");
 
             migrationBuilder.DropTable(
-                name: "Baskets");
-
-            migrationBuilder.DropTable(
                 name: "Cargos");
 
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "Baskets");
 
             migrationBuilder.DropTable(
                 name: "Products");

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopping.Migrations.ShoppingDb
 {
     [DbContext(typeof(ShoppingDbContext))]
-    [Migration("20201118175911_shopping")]
-    partial class shopping
+    [Migration("20201206140556_shop")]
+    partial class shop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
                 {
@@ -31,7 +31,7 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Piece")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -40,8 +40,11 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -83,6 +86,9 @@ namespace BookShopping.Migrations.ShoppingDb
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -132,23 +138,20 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Piece")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Product")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -168,13 +171,18 @@ namespace BookShopping.Migrations.ShoppingDb
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("BasketId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TotalFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("TotalFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
 
                     b.ToTable("Payments");
                 });
@@ -221,8 +229,17 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Picture")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -234,7 +251,7 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
                 {
                     b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
-                        .WithMany()
+                        .WithMany("Baskets")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -269,10 +286,21 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Navigation("Payment");
                 });
 
+            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Payment", b =>
+                {
+                    b.HasOne("BookShopping.Models.ShoppingModel.Basket", "Basket")
+                        .WithMany("Payments")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+                });
+
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Picture", b =>
                 {
                     b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
-                        .WithMany()
+                        .WithMany("Pictures")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -294,6 +322,8 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Cargo", b =>
@@ -309,6 +339,13 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Payment", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
+                {
+                    b.Navigation("Baskets");
+
+                    b.Navigation("Pictures");
                 });
 #pragma warning restore 612, 618
         }
