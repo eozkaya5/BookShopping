@@ -1,7 +1,4 @@
-﻿
-@{
-    ViewData["Title"] = "Ödeme";
-}
+﻿@model IEnumerable<BookShopping.Models.ShoppingModel.Payment>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,82 +24,85 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
-
 <body>
-    <section id="cart_items">
-        <div class="container">
-            <div class="table-responsive cart_info">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Resim</td>
-                            <td class="description">Ürün Adı</td>
-                            <td class="price">Fiyat</td>
-                            <td class="quantity">Miktar</td>
-                            <td class="total">Toplam Tutar</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="cart_product">
-                                <a href=""><img src="iimages" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">Ürün Adı</a></h4>
-                                <p>Ürün Kodu: </p>
-                            </td>
-                            <td class="cart_price">
-                                <p>$59</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">$59</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
 
-
-                        <tr>
-                            <td colspan="4">&nbsp;</td>
-                            <td colspan="2">
-                                <table class="table table-condensed total-result">
-                                    <tr>
-                                        <td>Sepet Ara Toplamı:</td>
-                                        <td>$59</td>
-                                    </tr>                                    
-                                    <tr class="Kargo Fiyatı:">
-                                        <td>Shipping Cost</td>
-                                        <td>Free</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Toplam:</td>
-                                        <td><span>$61</span></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="payment-options">
-                <a class="btn btn-primary" href="">Ödeme Yap</a>
-            </div>
+    <form asp-controller="Payment" asp-action="Pay" method="post">
+        <input type="hidden" name="BasketId" value="@ViewBag.BasketId" />
+        <div>
+            <label>Ödenecek Ücret:</label>
+            <input type="text" name="TotalFee" class="form-control" value="" required />
         </div>
-    </section> <!--/#cart_items-->
-    <script src="~/js/jquery.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/jquery.scrollUp.min.js"></script>
-    <script src="~/js/jquery.prettyPhoto.js"></script>
-    <script src="~/js/main.js"></script>
+        <br />
+        <button type="submit" class="btn btn-primary">Ödeme Yap</button>
+
+    </form>
+    <form asp-controller="Payment" asp-action="Index" method="post">
+
+        <input type="hidden" name="BasketId" value="@ViewBag.BasketId" />
+
+        <section id="cart_items">
+            <div class="container">
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td></td>
+                                @*<td>Ürün Adı</td>*@
+                                <td>Ödeme Kodu</td>
+                                <td>Ödenen Fiyat</td>
+                                <td>Tarih</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                <tr>
+                    <td class="cart_product">
+                        <a href=""><img src="iimages" alt=""></a>
+                    </td>
+                    <td class="cart_description">
+                        <p>@Html.DisplayFor(modelItem => item.Id) </p>
+                    </td>
+                    <td class="cart_price">
+                        <p>@Html.DisplayFor(modelItem => item.TotalFee)</p>
+                    </td>
+                    <td class="cart_total">
+                        <p class="cart_total_price">@Html.DisplayFor(modelItem => item.Date)</p>
+                    </td>
+
+                    <td class="cart_delete">
+                        <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>}
+                        </tbody>
+
+                    </table>
+                </div>
+
+
+            </div>
+        </section> <!--/#cart_items-->
+        <section id="do_action">
+
+            <div class="container">
+                <div class="col-sm-6">
+                    <div class="total_area">
+
+                        <ul>
+                            <li>Toplam Ödenen Ücret:<span>@ViewBag.totalPay ₺</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section><!--/#do_action-->
+        <script src="~/js/jquery.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/jquery.scrollUp.min.js"></script>
+        <script src="~/js/jquery.prettyPhoto.js"></script>
+        <script src="~/js/main.js"></script>
+
+    </form>
 </body>
 </html>
