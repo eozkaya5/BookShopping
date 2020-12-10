@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BookShopping.Models.Authentication.AppUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Bilgilerim</h1>
+
+<form action="Information" method="post">
+
+    @foreach (var item in Model)
+    {
+         <div>          
+             <dl class="row">
+
+                 <dt class="col-sm-2">
+                     Adı:
+                 </dt>
+                 <dd class="col-sm-10">
+                     @Html.DisplayFor(model => item.Name)
+                 </dd>
+
+                 <dt class="col-sm-2">
+                     Soyadı:
+                 </dt>
+                 <dd class="col-sm-10">
+                     @Html.DisplayFor(model => item.SurName)
+                 </dd>
+                 <dt class="col-sm-2">
+                     Kullanıcı Adı:
+                 </dt>
+                 <dd class="col-sm-10">
+                     @Html.DisplayFor(model => item.UserName)
+                 </dd>
+                 <dt class="col-sm-2">
+                     E-Posta:
+                 </dt>
+                 <dd class="col-sm-10">
+                     @Html.DisplayFor(model => item.Email)
+
+                 <dt class="col-sm-2">
+                     Adres:
+                 </dt>
+                 <dd class="col-sm-10">
+                     @Html.DisplayFor(model => item.Adress)
+                 </dd>
+
+                 <dt class="col-sm-2">
+                     Telefon Numarası:
+                 </dt>
+                 <dd class="col-sm-10">
+                     @Html.DisplayFor(model => item.PhoneNumber)
+                 </dd>
+
+             </dl>
+        </div>
+        <div>
+            <a asp-action="EditProfile" asp-route-id="@item.Id">Düzenle</a> |
+        </div>
+        
+}
+</form>
