@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BookShopping.Models.Authentication.AppUser>
+<h1>Müşteriler Listesi</h1>
+
+<form asp-controller="Product" asp-action="List" method="post">
+    <div class="table-responsive cart_info">
+        <table class="table table-condensed">
+            <thead>
+
+                <tr>
+                    <th>Müşteri Kodu</th>
+                    <th>Müşteri Adı</th>
+                    <th>Müşteri Soyadı</th>
+                    <th>Müşteri E-Posta</th>
+                    <th>Müşteri Numarası</th>
+                    <th>Müşteri Adresi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SurName)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+
+                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+
+                    <td>@Html.DisplayFor(modelItem => item.Adress)</td>
+                   <a asp-controller="Security" asp-action="Information" asp-route-id="@item.Id"><i class="fa fa-angle-down"></i>Bilgiler</a>
+
+                </tr>}
+            </tbody>
+        </table>
+    </div>
+</form>
