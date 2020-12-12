@@ -3,7 +3,7 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
     <link href="~/css/price-range.css" rel="stylesheet">
     <link href="~/css/animate.css" rel="stylesheet">
     <link href="~/css/main.css" rel="stylesheet">
-    <link href="~/css/responsive.css" rel="stylesheet"> 
+    <link href="~/css/responsive.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/images/ico/apple-touch-icon-114-precomposed.png">
@@ -54,26 +54,32 @@
             </div>
         </div><!--/header_top-->
         <div class="logo pull-left">
-            <h3><img src="~/images/home/book.png" alt="" />"Kitapları seviyor musunuz öyleyse hayatınız boyunca mutlu olacaksınız demektir."</h3>
+            <b><img src="~/images/home/book.png" alt="" />"Kitapları seviyor musunuz? Öyleyse; "Hayatınız boyunca mutlu olacaksınız." demektir."</b>
         </div>
     </header><!--/header-->
     <section id="form">
         <!--form-->
+        <div asp-validation-summary="All"></div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1">
                     <div class="login-form">
                         <!--login form-->
                         <h2>Giriş Yap</h2>
-                        <div asp-validation-summary="All"></div>
                         <form asp-action="Login" asp-controller="Security">
-                            <input type="email" placeholder="E-Posta" asp-for="Email" />
-                            <input type="text" placeholder="Şifre" value="" asp-for="Password" />
 
-                            <span>
+                            <div>
+                                <input type="email" placeholder="E-Posta" asp-for="Email" />
+                                <span asp-validation-for="Email"></span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Şifre" asp-for="Password" />
+                                <span asp-validation-for="Password"></span>
+                            </div>
+                            @*<span>
                                 <input type="checkbox" class="checkbox">
                                 Keep me signed in
-                            </span>
+                            </span>*@
                             <button type="submit" class="btn btn-default">Giriş Yap</button>
                         </form>
                     </div><!--/login form-->
@@ -81,26 +87,49 @@
                 <div class="col-sm-1">
                     <h2 class="or">VEYA</h2>
                 </div>
+
                 <div class="col-sm-4">
-                    <div class="signup-form">
+                    <iv class="signup-form">
                         <!--sign up form-->
                         <h2>Yeni Kayıt!</h2>
-                        <div asp-validation-summary="All"></div>
                         <form asp-action="Register" asp-controller="Security">
-                            <input type="text" placeholder="Ad" asp-for="Name" />
-                            <input type="text" placeholder="Soyad" asp-for="SurName" value="" />
-                            <input type="text" placeholder="Kullanıcı Adı" asp-for="UserName" />
-                            <input type="text" placeholder="E-posta" asp-for="Email" />
-                            <input type="text" placeholder="Şifre" asp-for="Password" />
-                            <input type="text" placeholder="Adres" asp-for="Adress" />
-                            <input type="text" placeholder="Telefon Numarası" asp-for="PhoneNumber" />
 
+                            <div>
+                                <input type="text" placeholder="Ad" asp-for="Name" />
+                                <span asp-validation-for="Name"></span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Soyad" asp-for="SurName" value="" />
+                                <span asp-validation-for="SurName"></span>
 
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Kullanıcı Adı" asp-for="UserName" />
+                                <span asp-validation-for="UserName"></span>
 
+                            </div>
+                            <div>
+                                <input type="text" placeholder="E-posta" asp-for="Email" />
+                                <span asp-validation-for="Email"></span>
+
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Şifre" asp-for="Password" />
+                                <span asp-validation-for="Password"></span>
+
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Adres" asp-for="Adress" />
+                                <span asp-validation-for="Adress"></span>
+
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Telefon Numarası" asp-for="PhoneNumber" />
+                                <span asp-validation-for="PhoneNumber"></span>
+                            </div>
                             <button type="submit" class="btn btn-default">Kaydet</button>
                         </form>
-                    </div><!--/sign up form-->
-                </div>
+                </div><!--/sign up form-->
             </div>
         </div>
     </section><!--/form-->
