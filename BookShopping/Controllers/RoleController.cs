@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookShopping.Controllers
 {
+    [Authorize (Roles ="eozkaya675@gmail.com")]
     public class RoleController : Controller
     {
         readonly RoleManager<AppRole> _roleManager;
@@ -53,6 +54,7 @@ namespace BookShopping.Controllers
         {
             return View(_roleManager.Roles.ToList());
         }
+
         public async Task<IActionResult> Delete(string id)
         {
             AppRole role = await _roleManager.FindByIdAsync(id);
@@ -63,6 +65,7 @@ namespace BookShopping.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public async Task<IActionResult> Create(string id)
         {
             if (id != null)
