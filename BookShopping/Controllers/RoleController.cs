@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BookShopping.Models.Authentication;
 using BookShopping.Models.ViewModel;
 using BookShopping.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
