@@ -1,36 +1,23 @@
 ﻿
 @model IEnumerable<BookShopping.Models.ShoppingModel.Category>
-
-<form asp-controller="Category" asp-action="Create" method="post">
-    <h1>Kategori Ekle</h1>
-    <input type="hidden" name="Id" />
-
-    <b>Kategori Adı</b>
-    <input name="Name" type="text" class="form-control" />
-    <br />
-    <button class="btn btn-fefault cart"><i class="fa fa-check-square"></i> Kategori Ekle</button> @TempData["create"]
-    @TempData["delete"]
-</form>
+<h1>KATEGORİLER</h1>
 <br />
-<form asp-controller="Category" asp-action="Index" method="post">
+
+<form asp-controller="Category" asp-action="Lİst" method="post">
     <div class="table-responsive cart_info">
         <table class="table table-condensed">
             <thead>
                 <tr>
                     <th>Kod</th>
                     <th>Kategori Adı</th>
-                    <th>Tarih</th>
                     <th></th>
                     <th></th>
-
                 </tr>
-
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-
                         <td>@Html.DisplayFor(modelItem => item.Id)</td>
                         <td>@Html.DisplayFor(modelItem => item.Name) </td>
                         <td>@Html.DisplayFor(modelItem => item.Date)</td>
@@ -39,7 +26,6 @@
                             <button asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-plus"></i>  Ürün Ekle</button>
                         </td>
                     </tr>
-
                 }
 
             </tbody>
