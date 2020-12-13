@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookShopping.Controllers
 {
+    [Authorize]
     public class BasketController : Controller
     {
         readonly ShoppingDbContext _context;
@@ -24,19 +25,26 @@ namespace BookShopping.Controllers
             _userManager = userManager;
             _context = context;
         }
+
         public IActionResult Index(int id, decimal total)
         {
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            var product = _context.Products.Find(id);
+            //var basket = _context.Baskets.FirstOrDefault(x => x.UserId == user.Id && x.ProductId == id).ToL;
             List<Basket> model = _context.Baskets.Include(x => x.Product).Where(x => x.UserId == user.Id).ToList();
-            if (model != null)
+            if (user != null)
             {
-                total = _context.Baskets.Sum(x => x.TotalFee);
-                ViewBag.total = +total + "₺";
+                if (model != null)
+                {
+                    total = _context.Baskets.Where(x=>x.ProductId==id).Sum(x => x.TotalFee);
+                    ViewBag.total = +total;
+                }
             }
+            ViewBag.UserName = User.Identity.Name;
             ViewBag.ProductId = id;
             return View(model);
         }       
-        //[Route("Basket/Index/{id}")]
+      
         public IActionResult Create(int id)
         {
 
@@ -45,7 +53,7 @@ namespace BookShopping.Controllers
                 var userName = User.Identity.Name;
                 var model = _userManager.Users.FirstOrDefault(x => x.UserName == userName);
                 var product = _context.Products.Find(id);
-                var basket = _context.Baskets.FirstOrDefault(x => x.ProductId == id);
+                var basket = _context.Baskets.FirstOrDefault(x => x.UserId==model.Id && x.ProductId == id);
                 if (model != null)
                 {
                     if (basket != null)
