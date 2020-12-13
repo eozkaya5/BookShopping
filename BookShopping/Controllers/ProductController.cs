@@ -4,36 +4,70 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using BookShopping.Models.Authentication;
 using BookShopping.Models.Context;
 using BookShopping.Models.ShoppingModel;
+using BookShopping.Repository;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+
 
 namespace BookShopping.Controllers
 {
 
     public class ProductController : Controller
     {
+
+        #region Ürün; ekle,sil düzenle listele
+
+        readonly Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager;
+        readonly IWebHostEnvironment _environment;
         public readonly ShoppingDbContext _context;
-        public ProductController(ShoppingDbContext context)
+       
+        public ProductController(ShoppingDbContext context, Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager, IWebHostEnvironment environment)
         {
             _context = context;
+            _userManager = userManager;
+            _environment = environment;
         }
+
         public IActionResult Detail(int id)
         {
+            ViewBag.UserName = User.Identity.Name;
+            List<Product> model = _context.Products.Where(x => x.Id == id).ToList();
+            ViewBag.CategoryId = id;
+            return View(model);
+        }
+
+        public IActionResult HomeProduct(int id)
+        {
+            ViewBag.UserName = User.Identity.Name;
+            List<Product> product = _context.Products.ToList();
+            ViewBag.CategoryId = id;
+            return View(product);
+        }
+
+        public IActionResult Index(int id)
+        {
+            ViewBag.UserName = User.Identity.Name;
             List<Product> model = _context.Products.Include(x => x.Category).Where(x => x.CategoryId == id).ToList();
             ViewBag.CategoryId = id;
             return View(model);
         }
 
-        public IActionResult Index(int id)
+        public IActionResult List(int id)
         {
-            List<Product> model = _context.Products.Include(x => x.Category).Where(x => x.CategoryId == id).ToList();
-            ViewBag.CategoryId = id;
+            ViewBag.UserName = User.Identity.Name;
+            List<Product> model = _context.Products.ToList();
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Create(int id)
         {
@@ -41,14 +75,23 @@ namespace BookShopping.Controllers
             return View(product);
         }
         [HttpPost]
-        public IActionResult Create(Product shopping)
+        public IActionResult Create(Product shopping )
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var category = _context.Categories.Find(shopping.CategoryId);
+
+                    if (shopping.PictureFolder != null)
+                    {
+                        string folder = "pictures/";
+                        folder += Guid.NewGuid().ToString() + "_" + shopping.PictureFolder.FileName;
+                        shopping.PictureWay ="/"+ folder;
+                        string serverFolder = Path.Combine(_environment.WebRootPath, folder);
+                        shopping.PictureFolder.CopyTo(new FileStream(serverFolder, FileMode.Create));
+                    }                  
                     _context.Products.Add(shopping);
+                    TempData["Create"] = shopping.Name + "  " + " ürün eklendi.";
                     _context.SaveChanges();
                     return RedirectToAction("Index", new { id = shopping.CategoryId });
                 }
@@ -57,66 +100,19 @@ namespace BookShopping.Controllers
             {
             }
             return View(shopping);
-
-
-            //if (shopping != null)
-            //{
-            //    string name = System.IO.Path.GetFileName(shopping.Picture);
-            //    string yol = "~/Images/" + name;
-
-            //}
-
-
-            // if (file != null)
-            //    {
-            //        string imageExtension = Path.GetExtension(file.Name);
-
-            //string imageName = Guid.NewGuid() + imageExtension;
-
-            //string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{imageName}");
-
-            //        using var stream = new FileStream(path, FileMode.Create);
-
-
         }
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var edit = _context.Products.FirstOrDefault(x => x.Id == id);
-            return View(edit);
-        }
-        [HttpPost]
-        public IActionResult Edit(Product product, int id)
-        {
-            try
-            {
-                if(ModelState.IsValid)
-                {
-                    var edit = _context.Products.FirstOrDefault(x=>x.Id==id);
-                    edit.Name = product.Name;
-                    edit.Price = product.Price;
-                    edit.Comment = product.Comment;
-                    _context.SaveChanges();
-                    return RedirectToAction("İndex", new { id = edit.CategoryId });
 
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return View(product);
-        }
         public IActionResult Delete(int id)
         {
             var delete = _context.Products.Find(id);
             _context.Products.Remove(delete);
+            TempData["delete"] = delete.Name + "  " + "ürünü silindi.";
+
             _context.SaveChanges();
             return RedirectToAction("Index", new { id = delete.CategoryId });
         }
     }
-
+    #endregion
 
 }
 
