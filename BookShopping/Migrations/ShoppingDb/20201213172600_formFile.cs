@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BookShopping.Migrations
+namespace BookShopping.Migrations.ShoppingDb
 {
-    public partial class login : Migration
+    public partial class formFile : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
