@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShopping.Models.ShoppingModel 
+namespace BookShopping.Models.ShoppingModel
 {
     public class Product
     {
@@ -14,8 +16,10 @@ namespace BookShopping.Models.ShoppingModel
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
-      public string Picture { get; set; }
-      //3  public string Picture { get { return $"/Images/_{Code}.jpg"; } }
+        public string PictureWay { get; set; }
+        [NotMapped]
+        public IFormFile PictureFolder { get; set; }
+
 
         public int CategoryId { get; set; }
         public int UserId { get; set; }
@@ -24,7 +28,7 @@ namespace BookShopping.Models.ShoppingModel
         public List<Basket> Baskets { get; set; }
         public List<Picture> Pictures { get; set; }
 
-        
+
     }
-  
+
 }

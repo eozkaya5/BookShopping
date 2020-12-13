@@ -18,14 +18,15 @@ namespace BookShopping.Models.ViewModel
         [DataType(DataType.EmailAddress, ErrorMessage = "Lütfen uygun formatta e-posta adresi giriniz.")]
         [Display(Name = "E-Posta ")]
         public string Email { get; set; }
-        [Required(ErrorMessage ="LÜtfen şifreyi boş geçmeyiniz..")]
-        [DataType(DataType.Password , ErrorMessage ="Lütfen uygun formatta şifre giriniz.")]
-        [Display(Name ="Password")]
+        [Required(ErrorMessage = "LÜtfen şifreyi boş geçmeyiniz..")]
+        [DataType(DataType.Password, ErrorMessage = "Lütfen uygun formatta şifre giriniz.")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
-        public string Address { get; set; }
-        [Display(Name = "Beni Hatırla")]
+        public string Adress { get; set; }
+        public string PhoneNumber { get; set; }
+
         public bool Persistent { get; set; }
-        public int MyProperty { get; set; }
+      
 
 
     }

@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace BookShopping.Models.Authentication 
 {
-    public class AppUser:IdentityUser<int>
+    public class AppUser : IdentityUser<int>
     {
-       
 
-        //[Required(ErrorMessage = "LÜtfen şifreyi boş geçmeyiniz..")]
-        //[DataType(DataType.Password, ErrorMessage = "Lütfen uygun formatta şifre giriniz.")]
-        //[Display(Name = "Password")]
-       
 
-        //public DateTime Date { get; set; }
-        //public string Address { get; set; }
+        public string Name { get; set; }
+        public string SurName { get; set; }
+        public DateTime Date { get; set; }
+        public string Adress { get; set; }
     }
 }

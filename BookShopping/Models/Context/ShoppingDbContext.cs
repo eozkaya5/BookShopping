@@ -16,7 +16,6 @@ namespace BookShopping.Models.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Information> Informations { get; set; }
         public DbSet<Cargo> Cargos { get; set; } 
         public DbSet<Picture> Pictures { get; set; }
        
