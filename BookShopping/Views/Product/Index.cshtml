@@ -1,67 +1,108 @@
 ﻿@model IEnumerable<BookShopping.Models.ShoppingModel.Product>
-
-<form asp-controller="Product" asp-action="Create" method="post">
+<h1>ÜRÜN EKLE</h1>
+<br />
+<form asp-controller="Product" asp-action="Create" method="post" enctype="multipart/form-data">
     <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId" />
-    <div class="col-6">
-        <label>Ürün Adı:</label>
+    <div class="form-group">
+        <label>  Ürün Adı:</label>
         <input type="text" name="Name" class="form-control" required />
     </div>
-    @*<div>
-            <label>resim:</label>
-            <input type="file" name="Pictures" class="form-control" required />
-        </div>*@
-    <div class="col-6">
-        <label>Açıklama:</label>
+    <div class="custom-file">
+        <label>  Resim:</label>
+        <input type='file' name="PictureFolder" class="custom-file" onchange="kontrol(this);" />
+        <img id="picture" src="" style="max-width:180px;" />
+    </div>
+    <div class="form-group">
+        <label>  Açıklama:</label>
         <input type="text" name="Comment" class="form-control" required />
     </div>
-    <div class="col-6">
-        <label>Fiyat:</label>
-        <input type="number" name="Price" class="form-control" required />
+    <div class="form-group">
+        <label>  Fiyat:</label>
+        <input type="text" name="Price" class="form-control" required />
     </div>
-    <br />   
-    <button  class="btn btn-fefault cart"><i class="fa fa-check-square"></i> Ürün Ekle</button>
+    <div class="form-group">
+        <label>  Miktar:</label>
+        <input type="text" name="Quantity" class="form-control" required />
+    </div>
+    <br />
+    <button class="btn btn-fefault cart"><i class="fa fa-check-square"></i> Ürün Ekle</button> @TempData["create"]
+    @TempData["delete"]
 </form>
 <br />
+<br />
+<br />
+
 <form asp-controller="Product" asp-action="Index" method="post">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Kategori Adı</th>
-                <th>Ürün Kodu</th>
-                @*  <th>Resim</th>*@
-                <th>Ürün Adı</th>
-                <th>Fiyat</th>
+    <div class="table-responsive cart_info">
+        <table class="table table-condensed">
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Category.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Id)
-    </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.Picture)
-        </td> *@
 
-    <td>
-        <a asp-action="Detail" asp-route-id="@item.Id">@item.Name</a>
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Price)
-    </td>
 
-    <td>
-        <a asp-action="Edit" asp-route-id="@item.Id">Düzenle</a> |
-        <a asp-action="Delete" asp-route-id="@item.Id">Sil</a> |
+            <thead>
+                <tr>
+                    <th>Kategori Adı</th>
+                    <th>Ürün Kodu</th>
+                    <th>Resim</th>
+                    <th>Ürün Adı</th>
+                    <th>Fiyat</th>
+                    <th>Miktar</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <td>
+            <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            <img src="@item.PictureWay" width="100" height="100" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
 
-    </td>
-</tr>
-}
-        </tbody>
-    </table>
+        <td>
+            <Button asp-action="Detail" asp-route-id="@item.Id" class="btn btn-fefault cart"><i class="fa fa-book"></i>  Detay</Button>
+            <button asp-action="Delete" asp-route-id="@item.Id" class="btn btn-fefault cart"><i class="fa fa-times"></i>  Sil</button>
+        </td>
+    </tr>}
+            </tbody>
+        </table>
+    </div>
+
 </form>
+
+<script>
+    function kontrol(input) {
+        if (input.files && input.files[0]) {
+            if (input.files[0].size > 1024 * 1000) {//boyut kontrolü
+                alert("Boyut Büyük");
+                document.getElementById("file").value = "";
+            }
+            else {
+                if (input.files[0].type != "image/jpeg") {//tür kontrolü
+                    alert("Format uygun değil");
+                    document.getElementById("file").value = "";
+                }
+                else {
+                    var resim = new FileReader();
+                    resim.onload = function (e) {//resmin img taginde gösterilmesi
+                        $('#picture')
+                            .attr('src', e.target.result);
+                    };
+                    resim.readAsDataURL(input.files[0]);
+                }
+            }
+        }
+    }</script>
