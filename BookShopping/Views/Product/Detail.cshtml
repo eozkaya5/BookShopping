@@ -26,8 +26,9 @@
 
 <body>
     <form action="Detail" method="post">
-        <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId/>
+        <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId" />
         <div class="col-sm-9 padding-right">
+            
             @foreach (var item in Model)
             {
                 <div class="product-details">
@@ -35,32 +36,24 @@
                     <div class="col-sm-5">
 
                         <div class="view-product">
-
-                            @* @Html.DisplayFor(modelItem => item.Picture)*@
-
+                            <img src="@item.PictureWay" height="100" width="100" />
                         </div>
-
                     </div>
-
                     <div class="col-sm-7">
                         <div class="product-information">
-                            <!--/product-information-->
                             <img src="images/product-details/new.jpg" class="newarrival" alt="" />
                             <h2>  @Html.DisplayFor(modelItem => item.Name)</h2>
                             <span>
                                 <span>@Html.DisplayFor(modelItem => item.Price) ₺</span>
-                                <label>Miktar:</label>
-                                <input type="text" value="3" />
-                                <button type="button" class="btn btn-fefault cart">
+                                <label>Miktar: @Html.DisplayFor(modelItem => item.Quantity)  @*@Html.DropDownList("Quantity", Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))*@</label>
+                                <button asp-controller="Basket" asp-action="Create" asp-route-id="@item.Id" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Sepete ekle
                                 </button>
                             </span>
-                            @* <p><b>Stok Durumu:</b> @Html.DisplayFor(modelItem => item.Picture)</p>*@
-                            @* <p><b>Durum:</b> @Html.DisplayFor(modelItem => item.Picture)</p>*@
                             <p><b>Marka:</b> </p>
                             <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
-                        </div><!--/product-information-->
+                        </div>
                     </div>
                     <div>
                         <p>AÇIKLAMA</p>
@@ -74,15 +67,13 @@
 
 
             }
-
-
         </div>
     </form>
-        <script src="~/js/jquery.js"></script>
-        <script src="~/js/price-range.js"></script>
-        <script src="~/js/jquery.scrollUp.min.js"></script>
-        <script src="~/js/bootstrap.min.js"></script>
-        <script src="~/js/jquery.prettyPhoto.js"></script>
-        <script src="~/js/main.js"></script>
-    </body>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/price-range.js"></script>
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.prettyPhoto.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
 </html>
