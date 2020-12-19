@@ -1,4 +1,4 @@
-﻿
+﻿@model BookShopping.Models.ShoppingModel.Contact
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,36 +24,38 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="~/images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
-
 <body>
-
-
-
-
-
-    <div id="contact-page" class="container">
-        <div class="bg">
-
+    <div>
+        <div>
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="contact-form">
+                    <div>
                         <h2 class="title text-center">BİZE ULAŞIN</h2>
-                        <div class="status alert alert-success" style="display: none"></div>
-                        <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                        <form asp-controller="Contact" asp-action="Index" method="post">
                             <div class="form-group col-md-6">
-                                <input type="text" name="name" class="form-control" required="required" placeholder="Ad">
+                                <input type="text" asp-for="Name" class="form-control" required="required" placeholder="Ad">
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="email" name="email" class="form-control" required="required" placeholder="E-Posta">
+                                <input type="email" asp-for="EMail" class="form-control" required="required" placeholder="E-Posta">
                             </div>
                             <div class="form-group col-md-12">
-                                <input type="text" name="subject" class="form-control" required="required" placeholder="Konu">
+                                <input type="text" asp-for="Subject" class="form-control" required="required" placeholder="Konu">
                             </div>
                             <div class="form-group col-md-12">
-                                <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Mesaj yaz"></textarea>
+                                <textarea asp-for="Message" cols="30" rows="10" required placeholder="Mesaj"></textarea>
                             </div>
                             <div class="form-group col-md-12">
-                                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Gönder">
+                                <input type="submit" class="btn btn-primary pull-right" value="Gönder">
+                            </div>
+                            <div i class="mb-2 text-center">
+                                @if (ViewBag.Succes != null)
+                                {
+                                    <h5 class="text-success">@ViewBag.Succes</h5>
+                                }
+                                @if (ViewBag.Error != null)
+                                {
+                                    <h5 class="text-danger">@ViewBag.Error</h5>
+                                }
                             </div>
                         </form>
                     </div>
@@ -62,12 +64,10 @@
                     <div class="contact-info">
                         <h2 class="title text-center">İLETİŞİM BİLGİLERİ</h2>
                         <address>
-                            <p>E-Shopper Inc.</p>
-                            <p>935 W. Webster Ave New Streets Chicago, IL 60614, NY</p>
-                            <p>Newyork USA</p>
-                            <p>Mobile: +2346 17 38 93</p>
-                            <p>Fax: 1-714-252-0026</p>
-                            <p>Email: info@e-shopper.com</p>
+                            <p>Book</p> Shopping                         
+                            <p>Türkiye</p>
+                            <p>Telefon: (0530 000 00 00)</p>                         
+                            <p>E-Posta: bookshopping12@gmail.com</p>
                         </address>
                         <div class="social-networks">
                             <h2 class="title text-center">SOSYAL AĞ</h2>

@@ -11,7 +11,7 @@
     </div>
     <div class="custom-file">
         <label>  Resim:</label>
-        <input type='file' name="PictureFolder" class="custom-file" onchange="kontrol(this);" />
+        <input type='file' asp-for="PictureFolder" class="custom-file" onchange="kontrol(this);" />
         <img id="picture" src="" style="max-width:180px;" />
     </div>
     <div class="form-group">
@@ -20,11 +20,11 @@
     </div>
     <div class="form-group">
         <label>  Fiyat:</label>
-        <input type="text" name="Price" class="form-control" required />
+        <input type="text" asp-for="Price" class="form-control" required />
     </div>
     <div class="form-group">
         <label>  Miktar:</label>
-        <input type="text" name="Quantity" class="form-control" required />
+        <input type="text" asp-for="Quantity" class="form-control" required />
     </div>
     <br />
     <div class="form-group">
@@ -57,4 +57,4 @@
         }
     }</script>
 
-@*email duzenlemeişlmei*@
+
