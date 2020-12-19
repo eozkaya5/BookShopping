@@ -1,0 +1,14 @@
+﻿@model IEnumerable<BookShopping.Models.Authentication.AppUser>
+<h1>Hesap Ayarları</h1>
+
+<form asp-controller="Security" asp-action="Account" method="post">
+
+    @foreach (var item in Model)
+    {
+
+<a asp-controller="Security" asp-action="Information" asp-route-id="@item.Id" class="btn btn-info">Kullanıcı Bilgileri</a>}
+    @*@foreach (var item in Model.categories)
+    {
+
+<a asp-controller="Category" asp-action="List" asp-route-id="@item.Id" class="btn btn-info">Şifre güncelle</a>}*@
+</form>

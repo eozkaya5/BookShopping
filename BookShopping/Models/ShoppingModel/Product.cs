@@ -17,6 +17,8 @@ namespace BookShopping.Models.ShoppingModel
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
         public string PictureWay { get; set; }
+        public bool Status { get; set; }
+
         [NotMapped]
         public IFormFile PictureFolder { get; set; }
 

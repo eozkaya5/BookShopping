@@ -9,10 +9,12 @@ namespace BookShopping.Models.ViewModel
 {
     public class UserModel
     {
-        public int Id { get; set; }      
+        public int Id { get; set; }
+        [Required(ErrorMessage = "LÜtfen adı boş geçmeyiniz..")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "LÜtfen soyadı boş geçmeyiniz..")]
         public string SurName { get; set; }
-       
+        [Required(ErrorMessage = "LÜtfen kullanıcı adını boş geçmeyiniz..")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Lütfen e-posta adresini boş geçmeyiniz.")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Lütfen uygun formatta e-posta adresi giriniz.")]
@@ -22,9 +24,12 @@ namespace BookShopping.Models.ViewModel
         [DataType(DataType.Password, ErrorMessage = "Lütfen uygun formatta şifre giriniz.")]
         [Display(Name = "Password")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "LÜtfen adresi boş geçmeyiniz..")]
         public string Adress { get; set; }
+        [Required(ErrorMessage = "LÜtfen telefon numarasını boş geçmeyiniz..")]
         public string PhoneNumber { get; set; }
-
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
         public bool Persistent { get; set; }
       
 

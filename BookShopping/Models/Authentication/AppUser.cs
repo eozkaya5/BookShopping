@@ -15,5 +15,7 @@ namespace BookShopping.Models.Authentication
         public string SurName { get; set; }
         public DateTime Date { get; set; }
         public string Adress { get; set; }
+        public string Password { get; set; }
+        public string NewPassword { get; set; }
     }
 }

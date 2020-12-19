@@ -3,12 +3,12 @@
 <h1>Bilgilerimi düzenle</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div>
         <form asp-controller="Security" asp-action="EditProfile" method="post">
             <input type="hidden" />
 
-            <div class="form-group">
+            <div>
                 <label>Ad</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
