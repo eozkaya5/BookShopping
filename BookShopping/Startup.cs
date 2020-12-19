@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BookShopping.CustomValidations;
 using BookShopping.Models.Authentication;
 using BookShopping.Models.Context;
+using BookShopping.Repository;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,9 +32,7 @@ namespace BookShopping
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LoginDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"])); 
-            services.AddDbContext<ShoppingDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"])); 
-
-
+            services.AddDbContext<ShoppingDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"]));                    
             services.AddIdentity<AppUser, AppRole>(_ =>
             {
                 _.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
@@ -55,15 +55,12 @@ namespace BookShopping
                 };
                 _.SlidingExpiration = true; //Expiration süresinin yarýsý kadar süre zarfýnda istekte bulunulursa eðer geri kalan yarýsýný tekrar sýfýrlayarak ilk ayarlanan süreyi tazeleyecektir.
                 _.ExpireTimeSpan = TimeSpan.FromMinutes(15); //CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
+                _.AccessDeniedPath = new PathString("/Home/Errors");
             });
             services.AddMvc();
+           // services.AddRepositoryService();
+           // services.AddHttpContextAccessor();
         }
-
-
-
-
-
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -89,7 +86,7 @@ namespace BookShopping
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Payment}/{action=Index}/{id?}");
+                    pattern: "{controller=Product}/{action=HomeProduct}/{id?}");
             });
         }
     }

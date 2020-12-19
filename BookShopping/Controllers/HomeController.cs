@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BookShopping.Controllers
 {
-    [Authorize]
+   
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -29,7 +29,7 @@ namespace BookShopping.Controllers
         {
             return View();
         }
-        public IActionResult Privacy()
+        public IActionResult List()
         {
             return View();
         }

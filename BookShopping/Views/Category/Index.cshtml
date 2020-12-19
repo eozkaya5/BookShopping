@@ -36,7 +36,9 @@
                         <td>@Html.DisplayFor(modelItem => item.Date)</td>
                         <td>
                             <button asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-times"></i>  Sil</button>
-                            <button asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-plus"></i>  Ürün Ekle</button>
+                            <button asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-book"></i>  Ürün işlemleri</button>
+                            <a asp-controller="Category" asp-action="Edit"  asp-route-id="@item.Id" class="btn btn-default"><i class="fa fa-refresh"></i>  Düzenle</a>
+
                         </td>
                     </tr>
 

@@ -46,10 +46,8 @@ namespace BookShopping.Controllers
                     Name = user.Name,
                     SurName = user.SurName,
                     UserName = user.UserName,
-                    Email = user.Email,                 
+                    Email = user.Email,
                     Adress = user.Adress
-
-
                 };
                 IdentityResult pasword = await _userManager.CreateAsync(appUser, user.Password);
                 IdentityResult phone = await _userManager.CreateAsync(appUser, user.PhoneNumber);
@@ -93,7 +91,6 @@ namespace BookShopping.Controllers
             return View("Index");
         }
 
-
         public IActionResult ResetPassword()
         {
             return View();
@@ -128,16 +125,16 @@ namespace BookShopping.Controllers
             return View();
         }
 
-        [HttpGet("[action]/{Id}/{token}")]
+        [HttpGet]
         public IActionResult UpdatePassword(string Id, string token)
         {
             return View();
         }
         [HttpPost("[action]/{Id}/{token}")]
-        public async Task<IActionResult> UpdatePassword(UpdatePasswordModel update, string Id, string token)
+        public async Task<IActionResult> UpdatePassword(AppUser update, string Id, string token)
         {
             AppUser user = await _userManager.FindByIdAsync(Id);
-            IdentityResult result = await _userManager.ResetPasswordAsync(user, HttpUtility.UrlDecode(token), update.Password);
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, HttpUtility.UrlDecode(token), update.NewPassword);
             if (result.Succeeded)
             {
                 ViewBag.State = true;
@@ -149,13 +146,42 @@ namespace BookShopping.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult EditProfile(int id)
+        public IActionResult EditPassword(int id)
         {
-            var user = _userManager.Users.FirstOrDefault(x=>x.Id==id);
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == id);
             return View(user);
         }
         [HttpPost]
-        public async Task<IActionResult> EditProfile(AppUser model)
+        public async Task<IActionResult> EditPassword(AppUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    IdentityResult result = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+                    if (!result.Succeeded)
+                    {
+                        result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+                        return View(model);
+                    }
+                    await _userManager.UpdateSecurityStampAsync(user);
+                    return RedirectToAction("Index", "Security");
+
+                    //await _signInManager.SignOutAsync();
+                    //await _signInManager.SignInAsync(user, true);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult EditProfile(int id)
+        {
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == id);
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(UserModel model)
         {
             if (ModelState.IsValid)
             {
@@ -177,62 +203,36 @@ namespace BookShopping.Controllers
             }
             return RedirectToAction("Index");
         }
-        public IActionResult Information()
+        // [Route("Security/Information/{id}")]
+        public IActionResult Information(int id)
         {
+            ViewBag.UserName = User.Identity.Name;
+            List<AppUser> model = _userManager.Users.Where(x => x.Id == id).ToList();
+            ViewBag.Id = id;
+            return View(model);
+        }
+
+        [Authorize(Roles = "eozkaya675@gmail.com")]
+        public IActionResult List()
+        {
+            ViewBag.UserName = User.Identity.Name;
             return View(_userManager.Users);
-        }    
+        }
+
+        public IActionResult Account(int id)
+        {
+            ViewBag.UserName = User.Identity.Name;
+            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+
+            List<AppUser> model = _userManager.Users.Where(x => x.Id == user.Id).ToList();
+
+            return View(model);
+        }
+
         public IActionResult Index()
         {
             return View();
-        } 
-        //[HttpGet]
-        //public IActionResult Edit(int id)
-        //{
-        //    var model = _context.Users.FirstOrDefault(x => x.Id == id);
-        //    return View(model);
-        //}
-        //[HttpPost]
-        //public IActionResult Edit(AppUser user, int id)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var model = _context.Users.FirstOrDefault(x => x.Id == id);
-        //            model.Name = user.Name;
-        //            model.SurName = user.SurName;
-        //            model.UserName = user.UserName;
-        //            model.Email = user.Email;
-        //            model.Address = user.Address;
-        //            _context.SaveChanges();
-        //            return RedirectToAction("Index", new { id = model.Id });
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //    return View(user);
-        //}
-        [HttpPost]
-        public IActionResult Create(AppUser userModel)
-        {
-            try
-            {
-                var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-
-                _context.Users.Add(userModel);
-                _context.SaveChanges();
-                return RedirectToAction("Index", "Security");
-            }
-            catch (Exception)
-            {
-                return View(userModel);
-            }
-
         }
-
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

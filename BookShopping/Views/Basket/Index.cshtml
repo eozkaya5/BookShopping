@@ -54,7 +54,7 @@
                                     <tr>
 
                                         <td class="cart_product">
-                                            <img src="~/pictures/@item.Product.PictureWay" height="100" width="100" />
+                                            <img src="@item.Product.PictureWay" height="100" width="100" />
                                         </td>
                                         <td class="cart_description">
                                             <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">@Html.DisplayFor(modelItem => item.Product.Name)</a>
@@ -84,16 +84,15 @@
             <section id="do_action">
                 @foreach (var basket in Model)
                 {
-
                     <div class="container">
                         <div class="col-sm-6">
                             <div class="total_area">
 
-                                <ul>
-                                    <li>Sepet ara toplam:<span>@ViewBag.total</span></li>
-                                    <li>Kargo ücreti: <span>0 ₺</span></li>
-                                </ul>
-                                <a asp-action="Index" asp-controller="Pay" asp-route-id="@basket.Id" class="btn btn-default check_out">Ödeme</a>
+                                @*<ul>
+                                    <li>Sepet ara toplam:<span>@(basket.TotalFee+basket.TotalFee) ₺</span></li>
+                                    <li>Kargo ücreti: <span>@ViewBag.total ₺</span></li>
+                                </ul>*@
+                                <a asp-action="Index" asp-controller="Payment" asp-route-id="@basket.Id" class="btn btn-default check_out">Ödeme Yap</a>
                             </div>
                         </div>
                     </div>

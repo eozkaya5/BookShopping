@@ -29,15 +29,15 @@ namespace BookShopping.Controllers
         public IActionResult Index(int id, decimal total)
         {
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            var product = _context.Products.Find(id);
-            //var basket = _context.Baskets.FirstOrDefault(x => x.UserId == user.Id && x.ProductId == id).ToL;
+            var product = _context.Products.Find(id);         
             List<Basket> model = _context.Baskets.Include(x => x.Product).Where(x => x.UserId == user.Id).ToList();
             if (user != null)
             {
                 if (model != null)
                 {
-                    total = _context.Baskets.Where(x=>x.ProductId==id).Sum(x => x.TotalFee);
-                    ViewBag.total = +total;
+                    total = _context.Baskets.Where(x=>x.UserId==id).Sum(x => x.TotalFee);
+                ViewBag.totalPay = +total + "₺";
+                   
                 }
             }
             ViewBag.UserName = User.Identity.Name;

@@ -20,10 +20,12 @@ namespace BookShopping.Controllers
         }
 
         public IActionResult Index(int id)
-        {          
+        {
+            ViewBag.UserName = User.Identity.Name;
             var model = _context.Categories.ToList();           
             return View(model);
         }      
+
         public IActionResult List(int id)
         {
             var model = _context.Categories.ToList();
@@ -53,6 +55,38 @@ namespace BookShopping.Controllers
                 
             }
             return View(model);
+        }   
+      [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.UserName = User.Identity.Name;
+            var edit = _context.Categories.FirstOrDefault(x => x.Id == id);
+            return View(edit);
+        }
+        [HttpPost]
+        public IActionResult Edit(Category category, int id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var model = _context.Categories.FirstOrDefault(x => x.Id == id);
+                    model.Name = category.Name;
+
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", new { id = model.UserId });
+
+                   
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            return View(category);
         }
 
         public IActionResult Delete(int id)

@@ -18,25 +18,25 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
+    <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SurName)
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SurName)
+        </td>
+        <td>@Html.DisplayFor(modelItem => item.Email)</td>
 
-                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+        <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
 
-                    <td>@Html.DisplayFor(modelItem => item.Adress)</td>
-                   <a asp-controller="Security" asp-action="Information" asp-route-id="@item.Id"><i class="fa fa-angle-down"></i>Bilgiler</a>
+        <td>@Html.DisplayFor(modelItem => item.Adress)</td>
 
-                </tr>}
+    </tr>
+}
             </tbody>
         </table>
     </div>

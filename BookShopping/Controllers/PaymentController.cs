@@ -18,11 +18,12 @@ namespace BookShopping.Controllers
             _context = context;
         }
         public IActionResult Index(int id,decimal totalPay)
-        {            
+        {      
+            ViewBag.UserName = User.Identity.Name;
             List<Payment> model = _context.Payments.Where(x => x.BasketId == id).ToList();
             if (model != null )
             {
-                totalPay = _context.Payments.Sum(x => x.TotalFee);
+                totalPay = _context.Payments.Where(x => x.BasketId == id).Sum(x => x.TotalFee);
                 ViewBag.totalPay = +totalPay + "₺";
             }           
             ViewBag.BasketId = id;
@@ -40,7 +41,8 @@ namespace BookShopping.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {                
+                {
+                    ViewBag.UserName = User.Identity.Name;
                     var payment = _context.Baskets.Find(model.BasketId);
                     payment.TotalFee -= model.TotalFee;
                     model.Date = DateTime.Now;
