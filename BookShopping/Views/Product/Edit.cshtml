@@ -1,22 +1,58 @@
 ﻿
 @model BookShopping.Models.ShoppingModel.Product
 
-<form asp-controller="Product" asp-action="Edit" method="post">
 
+<form asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
-    <div>
-        <label>Ürün Adı:</label>
-        <input type="text" asp-for="Name" class="form-control" required />
+
+    <div class="form-group">
+        <label>  Ürün Adı:</label>
+        <input type="text" name="Name" class="form-control" required/>
     </div>
-    <div>
-        <label>Açıklama:</label>
-        <input type="text" asp-for="Comment" class="form-control" required />
+    <div class="custom-file">
+        <label>  Resim:</label>
+        <input type='file' name="PictureFolder" class="custom-file" onchange="kontrol(this);" />
+        <img id="picture" src="" style="max-width:180px;" />
     </div>
-    <div>
-        <label>Fiyat:</label>
-        <input type="text" asp-for="Price" class="form-control" required />
+    <div class="form-group">
+        <label>  Açıklama:</label>
+        <input type="text" name="Comment" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>  Fiyat:</label>
+        <input type="text" name="Price" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>  Miktar:</label>
+        <input type="text" name="Quantity" class="form-control" required />
     </div>
     <br />
-    <button class="btn btn-fefault cart"><i class="fa fa-save"></i> Kaydet</button>
-    <br />
+    <div class="form-group">
+        <input type="submit" value="Düzenle" class="btn btn-primary" />
+    </div>
 </form>
+
+
+<script>
+    function kontrol(input) {
+        if (input.files && input.files[0]) {
+            if (input.files[0].size > 1024 * 1000) {//boyut kontrolü
+                alert("Boyut Büyük");
+                document.getElementById("file").value = "";
+            }
+            else {
+                if (input.files[0].type != "image/jpeg") {//tür kontrolü
+                    alert("Format uygun değil");
+                    document.getElementById("file").value = "";
+                }
+                else {
+                    var resim = new FileReader();
+                    resim.onload = function (e) {//resmin img taginde gösterilmesi
+                        $('#picture')
+                            .attr('src', e.target.result);
+                    };
+                    resim.readAsDataURL(input.files[0]);
+                }
+            }
+        }
+    }</script>
