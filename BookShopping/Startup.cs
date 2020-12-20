@@ -41,7 +41,8 @@ namespace BookShopping
             }).AddDefaultTokenProviders()
                 .AddPasswordValidator<CustomPasswordValidation>()
               .AddUserValidator<CustomUserValidation>()
-              .AddErrorDescriber<CustomIdentityErrorDescriber>().AddEntityFrameworkStores<LoginDbContext>();
+              .AddErrorDescriber<CustomIdentityErrorDescriber>().AddEntityFrameworkStores<LoginDbContext>()
+            .AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(_ =>
             {
@@ -56,8 +57,10 @@ namespace BookShopping
                 _.SlidingExpiration = true; //Expiration süresinin yarýsý kadar süre zarfýnda istekte bulunulursa eðer geri kalan yarýsýný tekrar sýfýrlayarak ilk ayarlanan süreyi tazeleyecektir.
                 _.ExpireTimeSpan = TimeSpan.FromMinutes(15); //CookieBuilder nesnesinde tanýmlanan Expiration deðerinin varsayýlan deðerlerle ezilme ihtimaline karþýn tekrardan Cookie vadesi burada da belirtiliyor.
                 _.AccessDeniedPath = new PathString("/Home/Errors");
+
             });
             services.AddMvc();
+
            // services.AddRepositoryService();
            // services.AddHttpContextAccessor();
         }
