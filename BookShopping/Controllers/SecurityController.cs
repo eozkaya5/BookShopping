@@ -17,8 +17,6 @@ namespace BookShopping.Controllers
 {
     public class SecurityController : Controller
     {
-
-
         readonly LoginDbContext _context;
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
@@ -29,13 +27,11 @@ namespace BookShopping.Controllers
             _context = context;
 
         }
-
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Register(UserModel user)
         {
@@ -90,8 +86,9 @@ namespace BookShopping.Controllers
             }
             return View("Index");
         }
-
-        public IActionResult ResetPassword()
+       
+        [HttpGet]
+        public IActionResult PasswordReset()
         {
             return View();
         }
@@ -106,12 +103,13 @@ namespace BookShopping.Controllers
                 MailMessage mail = new MailMessage();
                 mail.IsBodyHtml = true;
                 mail.To.Add(user.Email);
-                mail.From = new MailAddress("******@gmail.com", "Şifre Güncelleme", System.Text.Encoding.UTF8);
+                mail.From = new MailAddress("bookshopping12@gmail.com", "Şifre Güncelleme", System.Text.Encoding.UTF8);
                 mail.Subject = "Şifre Güncelleme Talebi";
-                mail.Body = $"<a target=\"_blank\" href=\"https://localhost:5001{Url.Action("UpdatePassword", "Security", new { Id = user.Id, token = HttpUtility.UrlEncode(token) })}\">Yeni şifre talebi için tıklayınız</a>";
+                mail.Body = $"<a target=\"_blank\" href=\"https://localhost:44370{Url.Action("EditPassword", "Security", new { Id = user.Id, token = HttpUtility.UrlEncode(token) })}\">Yeni şifre talebi için tıklayınız</a>";
                 mail.IsBodyHtml = true;
+
                 SmtpClient smp = new SmtpClient();
-                smp.Credentials = new NetworkCredential("eposta", "şifre");
+                smp.Credentials = new NetworkCredential("bookshopping12@gmail.com", "book5734");
                 smp.Port = 587;
                 smp.Host = "smtp.gmail.com";
                 smp.EnableSsl = true;
@@ -125,13 +123,13 @@ namespace BookShopping.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult UpdatePassword(string Id, string token)
+        [HttpGet("[action]/{Id}/{token}")]
+        public IActionResult EditPassword(string Id, string token)
         {
             return View();
         }
         [HttpPost("[action]/{Id}/{token}")]
-        public async Task<IActionResult> UpdatePassword(AppUser update, string Id, string token)
+        public async Task<IActionResult> EditPassword(AppUser update, string Id, string token)
         {
             AppUser user = await _userManager.FindByIdAsync(Id);
             IdentityResult result = await _userManager.ResetPasswordAsync(user, HttpUtility.UrlDecode(token), update.NewPassword);
@@ -145,35 +143,7 @@ namespace BookShopping.Controllers
                 ViewBag.State = false;
             return View();
         }
-        [HttpGet]
-        public IActionResult EditPassword(int id)
-        {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == id);
-            return View(user);
-        }
-        [HttpPost]
-        public async Task<IActionResult> EditPassword(AppUser model)
-        {
-            if (ModelState.IsValid)
-            {
-                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-                if (await _userManager.CheckPasswordAsync(user, model.Password))
-                {
-                    IdentityResult result = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
-                    if (!result.Succeeded)
-                    {
-                        result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
-                        return View(model);
-                    }
-                    await _userManager.UpdateSecurityStampAsync(user);
-                    return RedirectToAction("Index", "Security");
-
-                    //await _signInManager.SignOutAsync();
-                    //await _signInManager.SignInAsync(user, true);
-                }
-            }
-            return RedirectToAction("Index");
-        }
+     
         [HttpGet]
         public IActionResult EditProfile(int id)
         {
@@ -233,6 +203,7 @@ namespace BookShopping.Controllers
         {
             return View();
         }
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
