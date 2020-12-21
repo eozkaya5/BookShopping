@@ -1,64 +1,145 @@
-﻿@model IEnumerable<BookShopping.Models.ShoppingModel.Product>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#slider-carousel" data-slide-to="1"></li>
-                    <li data-target="#slider-carousel" data-slide-to="2"></li>
-                </ol>
+﻿@model BookShopping.Models.ModelTypes.ViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | E-Shopper</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/prettyPhoto.css" rel="stylesheet">
+    <link href="css/price-range.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head>
 
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <div class="col-sm-6">
-                            <h1><span>%</span>100</h1>
-                            <h2>İNDİRİM</h2>
+<body>
+
+    <section id="slider">
+        <!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-6">
+                                    <h1><span>%</span>100</h1>
+                                    <h2>İNDİRİM</h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="~/images/home/ücretisz kargo.jpg" class="girl img-responsive" alt="" />
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span></span></h1>
+                                    <h2></h2>
+                                    <h4>İyi bir kitabın,</h4>
+                                    <h4>iyi seçilmiş ve iyi bakılmış bir meyve ağacına benzediğini söylemek, </h4>
+                                    <h4>hakikaten daha azını söylemek demektir, onun meyveleri yalnız bir mevsimlik değildir.</h4>
+                                    <h4> (Calvin COLERİDGE)</h4>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="~/images/home/kitapp11.jpg" class="girl img-responsive" height="50" width="300" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <img src="~/images/home/ücretisz kargo.jpg" class="girl img-responsive" alt="" />
-                        </div>
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
                     </div>
-                    <div class="item">
-                        <div class="col-sm-6">
-                            <h1><span></span></h1>
-                            <h2></h2> 
-                            <h4>İyi bir kitabın,</h4>
-                            <h4>iyi seçilmiş ve iyi bakılmış bir meyve ağacına benzediğini söylemek, </h4>
-                            <h4>hakikaten daha azını söylemek demektir, onun meyveleri yalnız bir mevsimlik değildir.</h4>
-                            <h4> (Calvin COLERİDGE)</h4>
-                        </div>
-                        <div class="col-sm-6">
-                            <img src="~/images/home/kitapp11.jpg" class="girl img-responsive" height="50" width="300" />
-                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="slider">
+        <!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>Kategoriler</h2>
+                        <div class="panel-group category-products" id="accordian">
+                            <!--category-productsr-->
+                            <div class="panel panel-default">
+                                @foreach (var category in Model.SideBar)
+                                {<div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a asp-action="List" asp-controller="Product" asp-route-id="@category.Id">@category.Name</a></h4>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div><!--/category-products-->
                     </div>
                 </div>
-                <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
+                <form asp-controller="Product" asp-action="List" method="post">
+
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items">
+                            <!--features_items-->
+                            <h2 class="title text-center">Ürünler</h2>
+
+                            @foreach (var item in Model.HomePage)
+                            {
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+
+                                            <div class="productinfo text-center">
+                                                <h4>@item.Name</h4>
+
+                                                <img src="@item.PictureWay" height="250" width="50" />
+                                                <h2>@Html.DisplayFor(modelItem => item.Price)</h2>
+                                            </div>
+
+                                            <div class="product-overlay">
+                                                <div class="overlay-content">
+                                                    <h2>@Html.DisplayFor(modelItem => item.Price)</h2>
+                                                    <p><h4><a asp-action="Detail" asp-route-id="@item.Id">@item.Name</a></h4></p>
+                                                    <a asp-controller="Basket" asp-action="Create" asp-route-id="@item.Id" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Sepete ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </form>
             </div>
-
         </div>
-    </div>
-</div>
+    </section>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="left-sidebar">
-
-                @*  @Html.Partial("~/Views/Category/Index.cshtml")*@
-
-            </div><!--/category-products-->
-
-        </div>
-
-
-
-    </div>
-</div>
-
-
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/price-range.js"></script>
+    <script src="js/jquery.prettyPhoto.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
