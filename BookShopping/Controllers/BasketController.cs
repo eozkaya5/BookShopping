@@ -37,7 +37,7 @@ namespace BookShopping.Controllers
                 {
 
                     total = _context.Baskets.Where(x => x.UserId == user.Id).Sum(x => x.TotalFee);
-                    ViewBag.total = +total + "₺";
+                    ViewBag.total = +total;
 
                 }                
             }
