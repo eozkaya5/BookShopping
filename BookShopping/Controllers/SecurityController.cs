@@ -189,6 +189,15 @@ namespace BookShopping.Controllers
             return View(_userManager.Users);
         }
 
+        public IActionResult Delete(int id)
+        {
+            var user = _context.Users.FirstOrDefault(x=>x.Id==id);
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return View("List",_userManager.Users);
+        }
+
+
         public IActionResult Account(int id)
         {
             ViewBag.UserName = User.Identity.Name;
