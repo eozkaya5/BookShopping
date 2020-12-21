@@ -150,16 +150,16 @@ namespace BookShopping.Controllers
             return View(user);
         }
         [HttpPost]
-        public async Task<IActionResult> EditProfile(UserModel model)
+        public async Task<IActionResult> EditProfile(AppUser model,int id)
         {
             if (ModelState.IsValid)
             {
-                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                var user = _context.Users.FirstOrDefault(x => x.Id == id);
                 user.PhoneNumber = model.PhoneNumber;
                 user.Adress = model.Adress;
                 user.Name = model.Name;
                 user.SurName = model.SurName;
-
+             
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
@@ -170,7 +170,7 @@ namespace BookShopping.Controllers
                 await _signInManager.SignOutAsync();
                 await _signInManager.SignInAsync(user, true);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Information",new { id=model.Id} );
         }
         // [Route("Security/Information/{id}")]
         public IActionResult Information(int id)
