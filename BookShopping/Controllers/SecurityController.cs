@@ -43,16 +43,15 @@ namespace BookShopping.Controllers
                     SurName = user.SurName,
                     UserName = user.UserName,
                     Email = user.Email,
-                    Adress = user.Adress
+                    Adress = user.Adress,
+                    PhoneNumber= user.PhoneNumber
+
                 };
                 IdentityResult pasword = await _userManager.CreateAsync(appUser, user.Password);
-                IdentityResult phone = await _userManager.CreateAsync(appUser, user.PhoneNumber);
-
-                if (pasword.Succeeded && phone.Succeeded)
+                if (pasword.Succeeded)
                     return RedirectToAction("Index", "Security");
                 else
-                    pasword.Errors.ToList().ForEach(x => ModelState.AddModelError(x.Code, x.Description));
-                phone.Errors.ToList().ForEach(x => ModelState.AddModelError(x.Code, x.Description));
+                    pasword.Errors.ToList().ForEach(x => ModelState.AddModelError(x.Code, x.Description));                
 
             }
 
