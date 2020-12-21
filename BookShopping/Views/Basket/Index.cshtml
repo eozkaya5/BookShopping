@@ -29,10 +29,10 @@
     <form asp-controller="Basket" asp-action="Index" method="post">
         <input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
 
-        
-            <section id="cart_items">
-                <div class="container">
-                    <div class="breadcrumbs">                   
+
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
                     <div class="table-responsive cart_info">
                         <table class="table table-condensed">
                             <thead>
@@ -45,7 +45,7 @@
                                     <th>Toplam Ücret</th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
+                                    <th></th>                               
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,33 +72,34 @@
                                         <td class="cart_delete">
                                             <a asp-controller="Basket" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-times"></i></a>
                                         </td>
-                                        
+
                                     </tr>
                                 }
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
-                        </div>
                 </div>
-            </section> <!--/#cart_items-->
-            <section id="do_action">
-                @foreach (var basket in Model)
-                {
-                    <div class="container">
-                        <div class="col-sm-6">
-                            <div class="total_area">
+            </div>
+        </section> <!--/#cart_items-->
+        <section id="do_action">
+            @foreach (var basket in Model)
+            {
+                <div class="container">
+                    <div class="col-sm-6">
+                        <div class="total_area">
 
-                                @*<ul>
-                                    <li>Sepet ara toplam:<span>@(basket.TotalFee+basket.TotalFee) ₺</span></li>
-                                    <li>Kargo ücreti: <span>@ViewBag.total ₺</span></li>
-                                </ul>*@
-                                <a asp-action="Index" asp-controller="Payment" asp-route-id="@basket.Id" class="btn btn-default check_out">Ödeme Yap</a>
-                            </div>
+                            <ul>
+                                <li>Sepet ara toplam:<span>@ViewBag.total ₺</span></li>
+                                <li>Kargo ücreti: <span>0 ₺</span></li>
+                                <li>Sepet toplam:<span>@ViewBag.total ₺</span></li>
+
+                            </ul>
+                            <a asp-action="Index" asp-controller="Payment" asp-route-id="@basket.Id" class="btn btn-default check_out">Ödeme Yap</a>
                         </div>
                     </div>
-                }
-                </section><!--/#do_action-->
-        
+                </div>
+            }
+        </section><!--/#do_action-->
     </form>
     <script src="~/js/jquery.js"></script>
     <script src="~/js/bootstrap.min.js"></script> 
