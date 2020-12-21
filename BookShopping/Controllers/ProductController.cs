@@ -43,15 +43,7 @@ namespace BookShopping.Controllers
             List<Product> model = _context.Products.Where(x => x.Id == id).ToList();
             ViewBag.CategoryId = id;
             return View(model);
-        }
-
-        public IActionResult HomeProduct(int id)
-        {
-            ViewBag.UserName = User.Identity.Name;
-            List<Product> product = _context.Products.ToList();
-            ViewBag.CategoryId = id;
-            return View(product);
-        }
+        }     
 
         public IActionResult Index(int id)
         {
@@ -60,6 +52,7 @@ namespace BookShopping.Controllers
             ViewBag.CategoryId = id;
             return View(model);
         }
+
         public IActionResult List(int id)
         {
             ViewBag.UserName = User.Identity.Name;
