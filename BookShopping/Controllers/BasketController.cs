@@ -32,19 +32,19 @@ namespace BookShopping.Controllers
             var product = _context.Products.Find(id);         
             List<Basket> model = _context.Baskets.Include(x => x.Product).Where(x => x.UserId == user.Id).ToList();
             if (user != null)
-            {
+            {            
                 if (model != null)
                 {
-                    total = _context.Baskets.Where(x=>x.UserId==id).Sum(x => x.TotalFee);
-                ViewBag.totalPay = +total + "₺";
-                   
-                }
+
+                    total = _context.Baskets.Where(x => x.UserId == user.Id).Sum(x => x.TotalFee);
+                    ViewBag.total = +total + "₺";
+
+                }                
             }
             ViewBag.UserName = User.Identity.Name;
             ViewBag.ProductId = id;
             return View(model);
-        }       
-      
+        }          
         public IActionResult Create(int id)
         {
 
