@@ -31,6 +31,16 @@
                 <div class="col-sm-8">
                     <div>
                         <h2 class="title text-center">BİZE ULAŞIN</h2>
+                        <div i class="mb-2 text-center">
+                            @if (ViewBag.Succes != null)
+                            {
+                                <h5 class="text-success">@ViewBag.Succes</h5>
+                            }
+                            @if (ViewBag.Error != null)
+                            {
+                                <h5 class="text-danger">@ViewBag.Error</h5>
+                            }
+                        </div>
                         <form asp-controller="Contact" asp-action="Index" method="post">
                             <div class="form-group col-md-6">
                                 <input type="text" asp-for="Name" class="form-control" required="required" placeholder="Ad">
@@ -47,16 +57,7 @@
                             <div class="form-group col-md-12">
                                 <input type="submit" class="btn btn-primary pull-right" value="Gönder">
                             </div>
-                            <div i class="mb-2 text-center">
-                                @if (ViewBag.Succes != null)
-                                {
-                                    <h5 class="text-success">@ViewBag.Succes</h5>
-                                }
-                                @if (ViewBag.Error != null)
-                                {
-                                    <h5 class="text-danger">@ViewBag.Error</h5>
-                                }
-                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -64,7 +65,7 @@
                     <div class="contact-info">
                         <h2 class="title text-center">İLETİŞİM BİLGİLERİ</h2>
                         <address>
-                            <p>Book</p> Shopping                         
+                            <p>Kitap Evi</p>                       
                             <p>Türkiye</p>
                             <p>Telefon: (0530 000 00 00)</p>                         
                             <p>E-Posta: bookshopping12@gmail.com</p>
