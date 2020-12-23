@@ -18,17 +18,13 @@ namespace BookShopping.Models.ShoppingModel
         public DateTime Date { get; set; }
         public string PictureWay { get; set; }
         public bool Status { get; set; }
-
         [NotMapped]
         public IFormFile PictureFolder { get; set; }
-
-
         public int CategoryId { get; set; }
         public int UserId { get; set; }
-
         public Category Category { get; set; }
         public List<Basket> Baskets { get; set; }
-        public List<Picture> Pictures { get; set; }
+        public List<UserComment> UserComments { get; set; }
 
 
     }

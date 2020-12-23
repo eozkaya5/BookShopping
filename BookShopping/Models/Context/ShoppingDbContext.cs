@@ -15,10 +15,9 @@ namespace BookShopping.Models.Context
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Basket> Baskets { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Cargo> Cargos { get; set; } 
-        public DbSet<Picture> Pictures { get; set; }
-       
+        public DbSet<UserComment> UserComments { get; set; }
+
     }
-   
+
 }

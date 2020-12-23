@@ -17,8 +17,7 @@ namespace BookShopping.Models.ShoppingModel
         public int UserId { get; set; }
         public int ProductId { get; set; }
 
-        public Product Product { get; set; }
-        public List<Order>Orders { get; set; }
+        public Product Product { get; set; }     
         public List<Payment>Payments { get; set; }
 
     }
