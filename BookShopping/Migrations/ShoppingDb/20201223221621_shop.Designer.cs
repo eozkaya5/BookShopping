@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopping.Migrations.ShoppingDb
 {
     [DbContext(typeof(ShoppingDbContext))]
-    [Migration("20201213172600_formFile")]
-    partial class formFile
+    [Migration("20201223221621_shop")]
+    partial class shop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,48 +95,6 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("BasketId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CargoId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BasketId");
-
-                    b.HasIndex("CargoId");
-
-                    b.HasIndex("PaymentId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Payment", b =>
                 {
                     b.Property<int>("Id")
@@ -161,29 +119,6 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.HasIndex("BasketId");
 
                     b.ToTable("Payments");
-                });
-
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Picture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Road")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
@@ -214,6 +149,9 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -222,6 +160,37 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("BookShopping.Models.ShoppingModel.UserComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("UserComments");
                 });
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
@@ -235,33 +204,6 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Order", b =>
-                {
-                    b.HasOne("BookShopping.Models.ShoppingModel.Basket", "Basket")
-                        .WithMany("Orders")
-                        .HasForeignKey("BasketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookShopping.Models.ShoppingModel.Cargo", "Cargo")
-                        .WithMany("Orders")
-                        .HasForeignKey("CargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookShopping.Models.ShoppingModel.Payment", "Payment")
-                        .WithMany("Orders")
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Basket");
-
-                    b.Navigation("Cargo");
-
-                    b.Navigation("Payment");
-                });
-
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Payment", b =>
                 {
                     b.HasOne("BookShopping.Models.ShoppingModel.Basket", "Basket")
@@ -271,17 +213,6 @@ namespace BookShopping.Migrations.ShoppingDb
                         .IsRequired();
 
                     b.Navigation("Basket");
-                });
-
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Picture", b =>
-                {
-                    b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
-                        .WithMany("Pictures")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
@@ -295,16 +226,20 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
+            modelBuilder.Entity("BookShopping.Models.ShoppingModel.UserComment", b =>
                 {
-                    b.Navigation("Orders");
+                    b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
+                        .WithMany("UserComments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Payments");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Cargo", b =>
+            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Basket", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Category", b =>
@@ -312,16 +247,11 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("BookShopping.Models.ShoppingModel.Payment", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
                 {
                     b.Navigation("Baskets");
 
-                    b.Navigation("Pictures");
+                    b.Navigation("UserComments");
                 });
 #pragma warning restore 612, 618
         }

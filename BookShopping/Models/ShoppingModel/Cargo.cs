@@ -11,6 +11,5 @@ namespace BookShopping.Models.ShoppingModel
         public string Name { get; set; }
         public DateTime Date { get; set; }
 
-        public List<Order> Orders { get; set; }
     }
 }

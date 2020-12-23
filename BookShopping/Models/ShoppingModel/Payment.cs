@@ -14,6 +14,6 @@ namespace BookShopping.Models.ShoppingModel
         public int UserId { get; set; }
 
         public Basket Basket { get; set; }
-        public List<Order> Orders { get; set; }
+       
     }
 }

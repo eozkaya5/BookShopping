@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BookShopping.Models.ShoppingModel;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,5 +18,6 @@ namespace BookShopping.Models.Authentication
         public string Adress { get; set; }
         public string Password { get; set; }
         public string NewPassword { get; set; }
+
     }
 }
