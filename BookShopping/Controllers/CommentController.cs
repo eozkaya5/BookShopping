@@ -26,30 +26,40 @@ namespace BookShopping.Controllers
             ViewModel model = new ViewModel();
             model.HomePage = _context.Products.ToList();
             model.SideBar = _context.Categories.ToList();
-            model.Comment = _context.UserComments.Where(x=>x.ProductId==id).ToList();
-           
+            model.Comment = _context.UserComments.Where(x => x.ProductId == id).ToList();
+
             return View(model);
         }
-        [HttpGet]
+
         public IActionResult Create(int id)
-        {    
-            ViewBag.ProductId = id;
-
-           var product = new UserComment {  ProductId=id };
-            return View(product);
-        }
-        [HttpPost]
-        public IActionResult Create(UserComment model)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity.Name;
+                var model = _userManager.Users.FirstOrDefault(x => x.UserName == user);
+                var payment = _context.Payments.Find(id);
+                var product = _context.Products.Find(id);
 
-              var comment = _context.UserComments.Find(model.ProductId);
-            //model.Id = comment.ProductId;
-            _context.UserComments.Add(model);
-                TempData["create"] = "Yorum" + " " + model.Comment + "" + " eklendi.";
-                _context.SaveChanges();
+                var comment = _context.UserComments.FirstOrDefault(x => x.UserId == model.Id && x.PaymentId == payment.Id);
+                var add = new UserComment
+                {
+                    UserId = model.Id,
+                    PaymentId = payment.Id,
+                    ProductId=product.Id,
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    Comment = comment.Comment,
+                    Date = DateTime.Now
 
-                return View(model);
-           
+
+
+                };            
+                _context.UserComments.Add(add);
+                TempData["create"] = "Yorum" + " " + comment.Comment + "" + " eklendi.";
+                _context.SaveChanges();              
+            }
+            return RedirectToAction("Index");
         }
+
     }
-}
+    }
