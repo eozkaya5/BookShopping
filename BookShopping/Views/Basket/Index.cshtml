@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">  
+    <meta name="author" content="">
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/font-awesome.min.css" rel="stylesheet">
     <link href="~/css/prettyPhoto.css" rel="stylesheet">
@@ -24,12 +24,14 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
-
+<hr />
 <body>
+    <div class="recommended_items">
+        <!--recommended_items-->
+        <h2 class="title text-center">SEPETİM</h2>
+    </div>
     <form asp-controller="Basket" asp-action="Index" method="post">
         <input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
-
-
         <section id="cart_items">
             <div class="container">
                 <div class="breadcrumbs">
@@ -45,17 +47,13 @@
                                     <th>Toplam Ücret</th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>                               
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-
-                                        <td class="cart_product">
-                                            <img src="@item.Product.PictureWay" height="100" width="100" />
-                                        </td>
                                         <td class="cart_description">
                                             <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">@Html.DisplayFor(modelItem => item.Product.Name)</a>
                                             <p>Ürün Kodu: @Html.DisplayFor(modelItem => item.Product.Id)</p>
@@ -68,6 +66,9 @@
                                         <td> @Html.DisplayFor(modelItem => item.Date) </td>
                                         <td class="cart_total">
                                             @(item.Price * item.Quantity)
+                                        </td>
+                                        <td>
+                                            <a asp-action="Pay" asp-controller="Payment" asp-route-id="@item.Id" class="btn btn-default check_out">Satın Al</a>
                                         </td>
                                         <td class="cart_delete">
                                             <a asp-controller="Basket" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-times"></i></a>
@@ -94,7 +95,6 @@
                                 <li>Sepet toplam:<span>@ViewBag.total ₺</span></li>
 
                             </ul>
-                            <a asp-action="Index" asp-controller="Payment" asp-route-id="@basket.Id" class="btn btn-default check_out">Ödeme Yap</a>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
         </section><!--/#do_action-->
     </form>
     <script src="~/js/jquery.js"></script>
-    <script src="~/js/bootstrap.min.js"></script> 
+    <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/jquery.scrollUp.min.js"></script>
     <script src="~/js/jquery.prettyPhoto.js"></script>
     <script src="~/js/main.js"></script>

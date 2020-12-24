@@ -1,8 +1,11 @@
 ﻿
 @model IEnumerable<BookShopping.Models.ShoppingModel.Category>
-
+    <hr />  
 <form asp-controller="Category" asp-action="Create" method="post">
-    <h1>Kategori Ekle</h1>
+
+    <div class="recommended_items">
+        <h2 class="title text-center">Kategori Ekle</h2>
+    </div>
     <input type="hidden" name="Id" />
 
     <b>Kategori Adı</b>
@@ -12,6 +15,9 @@
     @TempData["delete"]
 </form>
 <br />
+<div class="recommended_items">
+    <h2 class="title text-center">KATEGORİLER</h2>
+</div>
 <form asp-controller="Category" asp-action="Index" method="post">
     <div class="table-responsive cart_info">
         <table class="table table-condensed">
@@ -37,7 +43,7 @@
                         <td>
                             <button asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-times"></i>  Sil</button>
                             <button asp-action="Index" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-book"></i>  Ürün işlemleri</button>
-                            <a asp-controller="Category" asp-action="Edit"  asp-route-id="@item.Id" class="btn btn-default"><i class="fa fa-refresh"></i>  Düzenle</a>
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default"><i class="fa fa-refresh"></i>  Düzenle</a>
 
                         </td>
                     </tr>
