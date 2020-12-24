@@ -1,10 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -28,7 +25,6 @@
     <link rel="apple-touch-icon-precomposed" href="~/images/ico/apple-touch-icon-57-precomposed.png">
     <title>@ViewData["Title"] - BookShopping</title>
 </head><!--/head-->
-
 <body>
     <header id="header">
         <!--header-->
@@ -38,26 +34,29 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="contactinfo">
-                          
+
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
+                               
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <li class="dropdown">
                                         <a class="active"><i class="fa fa-user"></i>@ViewBag.UserName</a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a asp-controller="Security" asp-action="Account" ><i class="fa fa-angle-down"></i>Bilgiler</a></li>
-
+                                            <li><a asp-controller="Security" asp-action="Account"><i class="fa fa-angle-down"></i>Bilgiler</a></li>
                                         </ul>
                                     </li>
-                                    <li><a asp-action="Logout" asp-controller="Security"><i class="fa fa-lock"></i> Çıkış Yap</a></li>
+                                    <li><a asp-controller="Basket" asp-action="Index"><i class="fa fa-shopping-cart"> Sepetim</i></a></li>
+                                    <li><a asp-controller="Payment" asp-action="Index"><i class="fa fa-table"> Şiparişlerim</i></a></li>
+
+                                    <li><a asp-action="Logout" asp-controller="Security"><i class="fa fa-lock"> Çıkış Yap</i></a></li>
                                 }
                                 else
                                 {
-                                    <li><a asp-controller="Security" asp-action="Index"><i class="fa fa-lock"></i>Giriş Yap</a></li>
+                                    <li><a asp-controller="Security" asp-action="Index"><i class="fa fa-lock"> Giriş Yap</i></a></li>
                                 }
                             </ul>
 
@@ -81,74 +80,24 @@
                     <div class="col-md-8 clearfix">
                         <div class="shop-menu clearfix pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"></i>Anasayfa</a></li>
-                                <li><a asp-controller="Contact" asp-action="Index"><i class="fa fa-star"></i>İletişim</a></li>
-                                <li><a asp-controller="Category" asp-action="List"><i class="fa fa-crosshairs"></i>Kategoriler</a></li>
-
-
+                                <li><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"> Anasayfa</i></a></li>
+                                <li><a asp-controller="Contact" asp-action="Index"><i class="fa fa-star"> İletişim</i></a></li>
                                 @if (User.IsInRole("eozkaya675@gmail.com"))
                                 {
-                                    <li><a asp-controller="Category" asp-action="Index"><i class="fa fa-crosshairs"></i>Kategori ve Ürün İşlemleri</a></li>                                   
-                                    <li><a asp-controller="Security" asp-action="List"><i class="fa fa-weibo"></i>Müşteriler</a></li>
-                                    <li><a asp-controller="Role" asp-action="Index"><i class="fa fa-table"></i>Yetkilendirme</a></li>
+                                    <li><a asp-controller="Category" asp-action="Index"><i class="fa fa-crosshairs"> Kategori ve Ürün İşlemleri</i></a></li>
+                                    <li><a asp-controller="Security" asp-action="List"><i class="fa fa-users"> Müşteriler</i></a></li>
+                                    <li><a asp-controller="Role" asp-action="Index"><i class="fa fa-arrow-circle-o-right"> Yetkilendirme</i></a></li>
 
                                 }
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <li><a asp-controller="Basket" asp-action="Index"><i class="fa fa-shopping-cart"></i>Sepetim</a></li>
-                                }
-
                             </ul>
-
-
                         </div>
                     </div>
                 </div>
             </div>
-        </div>@*/header-middle*@
-        <!--<div class="col-md-8 clearfix">
-            <div class="shop-menu clearfix pull-right">
-                <ul class="nav navbar-nav">
-                    <li><a href=""><i class="fa fa-user"></i> Account</a></li>
-                    <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
-                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                    <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
-                </ul>
-            </div>
-
-        </div>-->
-
-    </header><!--/header-->
-
-    @RenderBody()
-
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="left-sidebar">
-
-                        @*  @Html.Partial("~/Views/HomeCategory/List.cshtml")*@
-                      @*  @Html.Partial("~/Views/Category/Homecategory.cshtml")*@
-
-
-                    </div><!--/category-products-->
-
-                </div>
-
-                <div class="col-sm-9 padding-right">
-                    <div class="features_items">
-                        <!--features_items-->
-
-
-                    </div><!--features_items-->
-
-
-                </div>
-            </div>
         </div>
-    </section>
+    </header><!--/header-->
+    <hr />
+    @RenderBody()           
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
