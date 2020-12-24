@@ -1,9 +1,10 @@
 ﻿
 @model IEnumerable<BookShopping.Models.ShoppingModel.Category>
 
-<h1>KATEGORİLER</h1>
-<br />
-
+<hr />
+<div class="recommended_items">
+    <h2 class="title text-center">KATEGORİLER</h2>
+</div>
 <form asp-controller="Category" asp-action="Lİst" method="post">
     <div class="table-responsive cart_info">
         <table class="table table-condensed">
@@ -18,11 +19,11 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td> <a asp-action="List" asp-controller="Product" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></td>
-                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                </tr>
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td> <a asp-action="List" asp-controller="Product" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></td>
+                        <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    </tr>
                 }
 
             </tbody>

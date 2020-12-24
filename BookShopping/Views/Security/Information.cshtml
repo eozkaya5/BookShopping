@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<BookShopping.Models.Authentication.AppUser>
-
-<h1>Bilgilerim</h1>
-
+    <hr />
+    
+<div class="recommended_items">
+        <h2 class="title text-center">Kullanıcı Bilgilerim</h2>
+    </div>
     <form asp-controller="Security" asp-action="Information" method="post">
         <input type="hidden" name="Id" value="@ViewBag.Id" />
 
@@ -52,7 +54,7 @@
                 </dl>
             </div>
             <div>
-                <a asp-action="EditProfile" asp-route-id="@item.Id" class="btn btn-primary">Düzenle</a> 
+                <a asp-action="EditProfile" asp-route-id="@item.Id" class="btn btn-primary">Düzenle</a>
             </div>
         }
     </form>
