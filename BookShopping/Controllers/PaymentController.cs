@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BookShopping.Models.Authentication;
 using BookShopping.Models.Context;
 using BookShopping.Models.ShoppingModel;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShopping.Controllers
@@ -13,53 +15,64 @@ namespace BookShopping.Controllers
     public class PaymentController : Controller
     {
         readonly ShoppingDbContext _context;
-        public PaymentController(ShoppingDbContext context)
+        readonly UserManager<AppUser> _userManager;
+        public PaymentController(ShoppingDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-        public IActionResult Index(int id,decimal totalPay)
-        {      
-            ViewBag.UserName = User.Identity.Name;
-            List<Payment> model = _context.Payments.Where(x => x.BasketId == id).ToList();
-            if (model != null )
+        public IActionResult Index(int id, decimal totalPay,decimal totalQuantity)
+        {
+            List<Payment> model = _context.Payments.ToList();
+            if (model != null)
             {
-                totalPay = _context.Payments.Where(x => x.BasketId == id).Sum(x => x.TotalFee);
+                totalPay = _context.Payments.Sum(x => x.TotalFee);
+                totalQuantity = _context.Payments.Sum(x=>x.Quantity);
                 ViewBag.totalPay = +totalPay + "₺";
-            }           
+                ViewBag.totalQuantity = +totalQuantity ;
+
+            }
             ViewBag.BasketId = id;
             return View(model);
-        }
-        [HttpGet]
+        }     
         public IActionResult Pay(int id)
         {
-            var model = new Payment { BasketId = id };
-            return View(model);
-        }
-        [HttpPost]
-        public IActionResult Pay(Payment model)
-        {
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                if (ModelState.IsValid)
+                var userName = User.Identity.Name;
+                var model = _userManager.Users.FirstOrDefault(x => x.UserName == userName);
+                var basket = _context.Baskets.Find(id);
+                var product = _context.Products.Find(id);
+
+                var pay = _context.Payments.FirstOrDefault(x => x.UserId == model.Id && x.BasketId == id);
+                if (model != null)
                 {
-                    ViewBag.UserName = User.Identity.Name;
-                    var payment = _context.Baskets.Find(model.BasketId);
-                    payment.TotalFee -= model.TotalFee;
-                    model.Date = DateTime.Now;
-                    _context.Payments.Add(model);
+
+                    var addBasket = new Payment
+                    {
+                        UserId = model.Id,
+                        BasketId = basket.Id,
+                        ProductId=basket.ProductId,
+                        Name=product.Name,
+                        Quantity=basket.Quantity,
+                        TotalFee = basket.TotalFee,
+                        Date = DateTime.Now
+                    };
+                    _context.Payments.Add(addBasket);
+                    TempData["message"] = "Seçtiğiniz "+addBasket.Name+" ismindeki  ürün satın alınmıştır.";
                     _context.SaveChanges();
-                    return RedirectToAction("Index","Basket", new { id = model.BasketId });
                 }
             }
-            catch (Exception)
-            {
-
-            }
-            return View(model);
+            return RedirectToAction("Index");
         }
-
-
+        public IActionResult Delete(int id)
+        {
+            var pay = _context.Payments.Find(id);
+            _context.Payments.Remove(pay);
+            TempData["delete"] = "Seçtiğiniz  "+  pay.Name+" " +"ismindeki ürün silinmiştir." ;
+            _context.SaveChanges();
+            return RedirectToAction("Index", new { id = pay.BasketId });
+        }
     }
-
 }
 
