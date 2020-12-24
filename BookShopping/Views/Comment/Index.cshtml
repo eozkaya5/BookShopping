@@ -1,0 +1,27 @@
+﻿@model BookShopping.Models.ModelTypes.ViewModel
+
+<form asp-action="Index" asp-controller="Comment" method="post">
+    <input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
+    <div class="recommended_items">
+        <!--recommended_items-->
+        <div class="tab-pane fade active in" id="reviews">
+            <div class="col-sm-12">
+                @foreach (var item in Model.Comment)
+                {
+                    <ul>
+
+                        <li><a href=""><i class="fa fa-user"></i>@Html.DisplayFor(modelItem => item.UserName)</a></li>
+                        <li><a href=""><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.Date)</a></li>
+
+                    </ul>
+                    <p>@Html.DisplayFor(modelItem => item.Comment)</p>
+
+
+                    <a asp-action="Create" asp-controller="Comment" asp-route-id="@ViewBag.ProductId">Yorum Yap</a>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</form>
