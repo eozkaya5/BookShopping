@@ -4,14 +4,16 @@ using BookShopping.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookShopping.Migrations.ShoppingDb
 {
     [DbContext(typeof(ShoppingDbContext))]
-    partial class ShoppingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201223232812_pay")]
+    partial class pay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -120,7 +120,8 @@ namespace BookShopping.Migrations.ShoppingDb
                     TotalFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BasketId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,6 +132,12 @@ namespace BookShopping.Migrations.ShoppingDb
                         principalTable: "Baskets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Payments_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -142,6 +149,11 @@ namespace BookShopping.Migrations.ShoppingDb
                 name: "IX_Payments_BasketId",
                 table: "Payments",
                 column: "BasketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_ProductId",
+                table: "Payments",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",

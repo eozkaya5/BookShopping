@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopping.Migrations.ShoppingDb
 {
     [DbContext(typeof(ShoppingDbContext))]
-    [Migration("20201223221621_shop")]
+    [Migration("20201223232003_shop")]
     partial class shop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,6 +108,9 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalFee")
                         .HasColumnType("decimal(18,2)");
 
@@ -117,6 +120,8 @@ namespace BookShopping.Migrations.ShoppingDb
                     b.HasKey("Id");
 
                     b.HasIndex("BasketId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Payments");
                 });
@@ -212,7 +217,15 @@ namespace BookShopping.Migrations.ShoppingDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BookShopping.Models.ShoppingModel.Product", "Product")
+                        .WithMany("Payments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Basket");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
@@ -250,6 +263,8 @@ namespace BookShopping.Migrations.ShoppingDb
             modelBuilder.Entity("BookShopping.Models.ShoppingModel.Product", b =>
                 {
                     b.Navigation("Baskets");
+
+                    b.Navigation("Payments");
 
                     b.Navigation("UserComments");
                 });
