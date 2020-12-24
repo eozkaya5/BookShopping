@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Values\**" />
+    <Content Remove="Models\Values\**" />
+    <EmbeddedResource Remove="Models\Values\**" />
+    <None Remove="Models\Values\**" />
+    <TypeScriptCompile Remove="Models\Values\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
@@ -39,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Values\" />
     <Folder Include="wwwroot\pictures\" />
   </ItemGroup>
 

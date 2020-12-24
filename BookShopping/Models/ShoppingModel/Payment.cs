@@ -18,6 +18,7 @@ namespace BookShopping.Models.ShoppingModel
 
         public Basket Basket { get; set; }
         public Product Product { get; set; }
+        public List<Payment> Payments { get; set; }
 
     }
 }

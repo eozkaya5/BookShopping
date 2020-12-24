@@ -19,6 +19,9 @@ namespace BookShopping.Models.ShoppingModel
         public string Comment { get; set; }
         public DateTime Date { get; set; }
         public int ProductId { get; set; }
+        public int UserId { get; set; }
+        public int PaymentId { get; set; }
+        public Payment Payment { get; set; }
         public Product Product { get; set; }
 
 

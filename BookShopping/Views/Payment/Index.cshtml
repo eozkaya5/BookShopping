@@ -29,7 +29,7 @@
     <h3> @TempData["delete"]</h3>
     <div class="recommended_items">
         <!--recommended_items-->
-        <h2 class="title text-center">SİPARİŞLER</h2>       
+        <h2 class="title text-center">SİPARİŞLER</h2>
     </div>
     <form asp-controller="Payment" asp-action="Index" method="post">
 
@@ -73,10 +73,13 @@
                                     <td class="cart_total">
                                         <p class="cart_total_price">@Html.DisplayFor(modelItem => item.Date)</p>
                                     </td>
-
+                                    <td>
+                                        <a asp-action="Create" asp-controller="Comment" asp-route-id="@item.Id" class="btn btn-default check_out">Ürünü Değerlendir</a>
+                                    </td>
                                     <td class="cart_delete">
                                         <a asp-action="Delete" asp-route-id="@item.Id" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
                                     </td>
+
                                 </tr>
                             }
                         </tbody>
