@@ -24,6 +24,7 @@ namespace BookShopping.Models.ShoppingModel
         public int UserId { get; set; }
         public Category Category { get; set; }
         public List<Basket> Baskets { get; set; }
+        public List<Payment> Payments { get; set; }
         public List<UserComment> UserComments { get; set; }
 
 
