@@ -23,9 +23,11 @@ namespace BookShopping.Controllers
         }
         public IActionResult Index(int id, decimal totalPay,decimal totalQuantity)
         {
-            List<Payment> model = _context.Payments.ToList();
-            if (model != null)
-            {
+            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            var basket = _context.Baskets.Find(id);
+            List<Payment> model = _context.Payments.Where(x => x.UserId == user.Id).ToList();
+            if (user != null)
+            {                         
                 totalPay = _context.Payments.Sum(x => x.TotalFee);
                 totalQuantity = _context.Payments.Sum(x=>x.Quantity);
                 ViewBag.totalPay = +totalPay + "₺";
@@ -34,36 +36,36 @@ namespace BookShopping.Controllers
             }
             ViewBag.BasketId = id;
             return View(model);
-        }     
+        }
         public IActionResult Pay(int id)
         {
-            if (User.Identity.IsAuthenticated)
             {
-                var userName = User.Identity.Name;
-                var model = _userManager.Users.FirstOrDefault(x => x.UserName == userName);
-                var basket = _context.Baskets.Find(id);
-                var product = _context.Products.Find(id);
-
-                var pay = _context.Payments.FirstOrDefault(x => x.UserId == model.Id && x.BasketId == id);
-                if (model != null)
+                if (User.Identity.IsAuthenticated)
                 {
-
-                    var addBasket = new Payment
+                    var userName = User.Identity.Name;
+                    var model = _userManager.Users.FirstOrDefault(x => x.UserName == userName);
+                    var basket = _context.Baskets.Find(id);
+                   
+                    var pay = _context.Payments.FirstOrDefault(x => x.UserId == model.Id && x.BasketId == id);
+                    if (model != null)
                     {
-                        UserId = model.Id,
-                        BasketId = basket.Id,
-                        ProductId=basket.ProductId,
-                        Name=product.Name,
-                        Quantity=basket.Quantity,
-                        TotalFee = basket.TotalFee,
-                        Date = DateTime.Now
-                    };
-                    _context.Payments.Add(addBasket);
-                    TempData["message"] = "Seçtiğiniz "+addBasket.Name+" ismindeki  ürün satın alınmıştır.";
-                    _context.SaveChanges();
+                        var addBasket = new Payment
+                        {
+                            UserId = model.Id,
+                            BasketId = basket.Id,
+                            ProductId = basket.ProductId,
+                            Name=basket.Name,
+                            Quantity = basket.Quantity,
+                            TotalFee = basket.TotalFee,
+                            Date = DateTime.Now
+                        };
+                        _context.Payments.Add(addBasket);
+                        TempData["message"] = "Seçtiğiniz " + addBasket.Name + " ismindeki  ürün satın alınmıştır.";
+                        _context.SaveChanges();
+                    }
                 }
+                    return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {

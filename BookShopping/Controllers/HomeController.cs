@@ -15,21 +15,21 @@ namespace BookShopping.Controllers
    
     public class HomeController : Controller
     {
-        readonly ShoppingDbContext _contex;
+        readonly ShoppingDbContext _context;
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger, ShoppingDbContext context)
         {
             _logger = logger;
-            _contex = context;
+            _context = context;
         }
 
         public IActionResult Index()
         {
             ViewBag.UserName = User.Identity.Name;
             ViewModel model = new ViewModel();
-            model.HomePage = _contex.Products.ToList();
-            model.SideBar = _contex.Categories.ToList();
+            model.HomePage = _context.Products.ToList();
+            model.SideBar = _context.Categories.ToList();
             return View(model);
         }
         public IActionResult Errors()

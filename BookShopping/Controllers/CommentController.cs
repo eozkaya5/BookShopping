@@ -26,40 +26,46 @@ namespace BookShopping.Controllers
             ViewModel model = new ViewModel();
             model.HomePage = _context.Products.ToList();
             model.SideBar = _context.Categories.ToList();
-            model.Comment = _context.UserComments.Where(x => x.ProductId == id).ToList();
+            model.Comment = _context.UserComments.Where(x => x.UserId == id).ToList();
 
             return View(model);
         }
-
+        [HttpGet]
         public IActionResult Create(int id)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = User.Identity.Name;
-                var model = _userManager.Users.FirstOrDefault(x => x.UserName == user);
-                var payment = _context.Payments.Find(id);
-                var product = _context.Products.Find(id);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(UserComment userComment,int id)
+        {
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var user = User.Identity.Name;
+            //    var model = _userManager.Users.FirstOrDefault(x => x.UserName == user);
+                //var payment = _context.Payments.Find(id);
+                ////var product = _context.Products.Find(id);
 
-                var comment = _context.UserComments.FirstOrDefault(x => x.UserId == model.Id && x.PaymentId == payment.Id);
-                var add = new UserComment
-                {
-                    UserId = model.Id,
-                    PaymentId = payment.Id,
-                    ProductId=product.Id,
-                    UserName = model.UserName,
-                    Email = model.Email,
-                    Comment = comment.Comment,
-                    Date = DateTime.Now
+                var comment = _context.UserComments.FirstOrDefault(x => x.Id==id );
+                ////var add = new UserComment
+                ////{
+                ////    UserId = model.Id,
+                ////    //PaymentId = payment.Id,
+                ////    ProductId = product.Id,
+                ////    UserName = model.UserName,
+                ////    Email = model.Email,
+                ////    Comment = comment.Comment,
+                ////    Date = DateTime.Now
 
 
 
-                };            
-                _context.UserComments.Add(add);
-                TempData["create"] = "Yorum" + " " + comment.Comment + "" + " eklendi.";
-                _context.SaveChanges();              
+                ////};
+                _context.UserComments.Add(userComment);
+                ////TempData["create"] = "Yorum" + " " + comment.Comment + "" + " eklendi.";
+                _context.SaveChanges();
+            return View(userComment);
             }
-            return RedirectToAction("Index");
+            
         }
 
     }
-    }
+
