@@ -164,7 +164,7 @@ namespace BookShopping.Controllers
         //    return RedirectToAction("Index", new { id = product.CategoryId });
         ////}
         #endregion
-
+               
     }
 }
 

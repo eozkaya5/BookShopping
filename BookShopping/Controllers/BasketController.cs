@@ -35,19 +35,17 @@ namespace BookShopping.Controllers
             {            
                 if (model != null)
                 {
-
                     total = _context.Baskets.Where(x => x.UserId == user.Id).Sum(x => x.TotalFee);
                     ViewBag.total = +total;
-
                 }                
             }
             ViewBag.UserName = User.Identity.Name;
             ViewBag.ProductId = id;
             return View(model);
         }          
+
         public IActionResult Create(int id)
         {
-
             if (User.Identity.IsAuthenticated)
             {
                 var userName = User.Identity.Name;
@@ -79,6 +77,8 @@ namespace BookShopping.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
         public IActionResult Delete(int id)
         {
             var product = _context.Baskets.Find(id);

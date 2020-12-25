@@ -40,7 +40,7 @@
                     <div class="col-sm-6">
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
-                               
+
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <li class="dropdown">
@@ -95,9 +95,11 @@
                 </div>
             </div>
         </div>
+        @RenderBody()
     </header><!--/header-->
+  
     <hr />
-    @RenderBody()           
+
     <div class="footer-bottom">
         <div class="container">
             <div class="row">

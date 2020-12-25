@@ -72,9 +72,9 @@
                                     <td class="cart_total">
                                         <p class="cart_total_price">@Html.DisplayFor(modelItem => item.Date)</p>
                                     </td>
-                                    <td>
+                                    @*<td>
                                         <a asp-action="Create" asp-controller="Comment" asp-route-id="@item.Id" class="btn btn-default check_out">Ürünü Değerlendir</a>
-                                    </td>
+                                    </td>*@
                                     <td class="cart_delete">
                                         <a asp-action="Delete" asp-route-id="@item.Id" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
                                     </td>
@@ -85,8 +85,6 @@
 
                     </table>
                 </div>
-
-
             </div>
         </section> <!--/#cart_items-->
         <section id="do_action">
