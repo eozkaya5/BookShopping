@@ -82,13 +82,13 @@
                             <ul class="nav navbar-nav">
                                 <li><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"> Anasayfa</i></a></li>
                                 <li><a asp-controller="Contact" asp-action="Index"><i class="fa fa-star"> İletişim</i></a></li>
-                               @if (User.IsInRole("eozkaya675@gmail.com"))
-                               {
+                               @*@if (User.IsInRole("eozkaya675@gmail.com"))
+                               {*@
                                     <li><a asp-controller="Category" asp-action="Index"><i class="fa fa-crosshairs"> Kategori ve Ürün İşlemleri</i></a></li>
                                     <li><a asp-controller="Security" asp-action="List"><i class="fa fa-users"> Müşteriler</i></a></li>
                                     <li><a asp-controller="Role" asp-action="Index"><i class="fa fa-arrow-circle-o-right"> Yetkilendirme</i></a></li>
 
-                               }
+                              @* }*@
                             </ul>
                         </div>
                     </div>

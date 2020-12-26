@@ -185,7 +185,7 @@ namespace BookShopping.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "eozkaya675@gmail.com")]
+        //[Authorize(Roles = "eozkaya675@gmail.com")]
         public IActionResult List()
         {
             ViewBag.UserName = User.Identity.Name;
