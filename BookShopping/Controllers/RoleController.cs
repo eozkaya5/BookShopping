@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookShopping.Controllers
 {
-    [Authorize (Roles ="eozkaya675@gmail.com")]
+    //[Authorize (Roles ="Elif57")]
     public class RoleController : Controller
     {
         readonly RoleManager<AppRole> _roleManager;
@@ -24,6 +24,7 @@ namespace BookShopping.Controllers
         }
         public async Task<IActionResult> RoleAssign(string id)
         {
+            ViewBag.UserName = User.Identity.Name;
             AppUser user = await _userManager.FindByIdAsync(id);
             List<AppRole> allRoles = _roleManager.Roles.ToList();
             List<string> userRoles = await _userManager.GetRolesAsync(user) as List<string>;
@@ -53,6 +54,8 @@ namespace BookShopping.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.UserName = User.Identity.Name;
+
             return View(_roleManager.Roles.ToList());
         }
 
@@ -67,19 +70,7 @@ namespace BookShopping.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Create(string id)
-        {
-            if (id != null)
-            {
-                AppRole role = await _roleManager.FindByIdAsync(id);
-
-                return View(new RoleViewModel
-                {
-                    Name = role.Name
-                });
-            }
-            return View();
-        }
+       
         [HttpPost]
         public async Task<IActionResult> Create(RoleViewModel model, string id)
         {
@@ -101,4 +92,4 @@ namespace BookShopping.Controllers
 
         }
     }
-}
+} 

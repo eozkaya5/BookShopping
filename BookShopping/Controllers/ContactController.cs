@@ -14,6 +14,7 @@ namespace BookShopping.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+           ViewBag.UserName= User.Identity.Name;
             return View();
         }
         [HttpPost]

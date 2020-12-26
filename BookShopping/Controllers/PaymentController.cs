@@ -23,6 +23,7 @@ namespace BookShopping.Controllers
         }
         public IActionResult Index(int id, decimal totalPay,decimal totalQuantity)
         {
+            ViewBag.UserName = User.Identity.Name;
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
             var basket = _context.Baskets.Find(id);
             List<Payment> model = _context.Payments.Where(x => x.UserId == user.Id).ToList();

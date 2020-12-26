@@ -9,23 +9,27 @@ using System.Web;
 using BookShopping.Models.Authentication;
 using BookShopping.Models.Context;
 using BookShopping.Models.ViewModel;
+using BookShopping.Poco;
+using Castle.Core.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace BookShopping.Controllers
 {
     public class SecurityController : Controller
     {
+        private readonly IOptions<MyConfig> config;
         readonly LoginDbContext _context;
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
-        public SecurityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, LoginDbContext context)
+        public SecurityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, LoginDbContext context, IOptions<MyConfig> config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-
+                this.config = config;
         }
         [HttpGet]
         public IActionResult Register()
@@ -98,7 +102,7 @@ namespace BookShopping.Controllers
             if (user != null)
             {
                 string token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
+               
                 MailMessage mail = new MailMessage();
                 mail.IsBodyHtml = true;
                 mail.To.Add(user.Email);
@@ -209,6 +213,7 @@ namespace BookShopping.Controllers
 
         public IActionResult Index()
         {
+           
             return View();
         }
 
