@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BookShopping.CustomValidations;
 using BookShopping.Models.Authentication;
 using BookShopping.Models.Context;
+using BookShopping.Poco;
 using BookShopping.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -31,8 +32,9 @@ namespace BookShopping
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LoginDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"])); 
-            services.AddDbContext<ShoppingDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"]));                    
+            services.AddDbContext<LoginDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"]));
+            services.AddDbContext<ShoppingDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"]));
+            services.Configure<MyConfig>(Configuration.GetSection("MyConfig"));
             services.AddIdentity<AppUser, AppRole>(_ =>
             {
                 _.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
@@ -59,8 +61,9 @@ namespace BookShopping
                 _.AccessDeniedPath = new PathString("/Home/Errors");
 
             });
+          
             services.AddMvc();
-
+            //services.AddSingleton<IConfiguration>(Configuration);
            // services.AddRepositoryService();
            // services.AddHttpContextAccessor();
         }
