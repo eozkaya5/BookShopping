@@ -26,7 +26,7 @@ namespace BookShopping.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int id, decimal total)
+        public IActionResult Index(int id, decimal total,decimal quantity)
         {
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
             var product = _context.Products.Find(id);         
@@ -36,7 +36,10 @@ namespace BookShopping.Controllers
                 if (model != null)
                 {
                     total = _context.Baskets.Where(x => x.UserId == user.Id).Sum(x => x.TotalFee);
+                    quantity = _context.Baskets.Where(x => x.UserId == user.Id).Sum(x => x.Quantity);
+
                     ViewBag.total = +total;
+                    ViewBag.Quantity = +quantity;
                 }                
             }
             ViewBag.UserName = User.Identity.Name;
