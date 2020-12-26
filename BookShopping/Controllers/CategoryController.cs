@@ -33,7 +33,7 @@ namespace BookShopping.Controllers
             return View(model);
         }
         [HttpGet]
-         [Authorize (Roles ="eozkaya675@gmail.com")]
+         //[Authorize (Roles ="eozkaya675@gmail.com")]
         public IActionResult Create()
         {
             return View();
