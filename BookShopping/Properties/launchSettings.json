@@ -19,7 +19,8 @@
     "BookShopping": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Key": "Value",
+        "ASPNETCORE_ENVIRONMENT": "Staging",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       },
       "sqlDebugging": true,
