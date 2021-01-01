@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,8 @@ namespace BookShopping
 {
     public class Startup
     {
+        private string _connection = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,7 +37,8 @@ namespace BookShopping
         {
             services.AddDbContext<LoginDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"]));
             services.AddDbContext<ShoppingDbContext>(_ => _.UseSqlServer(Configuration["ConnectionString"]));
-            services.Configure<MyConfig>(Configuration.GetSection("MyConfig"));
+            services.AddSingleton<IConfiguration>(Configuration);
+          
             services.AddIdentity<AppUser, AppRole>(_ =>
             {
                 _.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
@@ -63,7 +67,6 @@ namespace BookShopping
             });
           
             services.AddMvc();
-            //services.AddSingleton<IConfiguration>(Configuration);
            // services.AddRepositoryService();
            // services.AddHttpContextAccessor();
         }
