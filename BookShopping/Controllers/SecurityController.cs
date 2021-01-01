@@ -1,35 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using BookShopping.Models.Authentication;
 using BookShopping.Models.Context;
 using BookShopping.Models.ViewModel;
 using BookShopping.Poco;
-using Castle.Core.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+
 
 namespace BookShopping.Controllers
 {
     public class SecurityController : Controller
     {
-        private readonly IOptions<MyConfig> config;
-        readonly LoginDbContext _context;
+        private readonly IConfiguration _configuration;
+        readonly LoginDbContext _context=null;
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
-        public SecurityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, LoginDbContext context, IOptions<MyConfig> config)
+        public SecurityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, LoginDbContext context, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-                this.config = config;
+            _configuration = configuration;
+
         }
         [HttpGet]
         public IActionResult Register()
@@ -89,32 +96,37 @@ namespace BookShopping.Controllers
             }
             return View("Index");
         }
-       
+        
         [HttpGet]
         public IActionResult PasswordReset()
-        {
+        {         
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> PasswordReset(ResetPasswordModel reset)
         {
+          
             AppUser user = await _userManager.FindByEmailAsync(reset.Email);
             if (user != null)
             {
+                var email = _configuration["MyConfig:Email"];
+                var password = _configuration["MyConfig:Password"];
+                var host = _configuration["MyConfig:Host"];
+
                 string token = await _userManager.GeneratePasswordResetTokenAsync(user);
                
                 MailMessage mail = new MailMessage();
                 mail.IsBodyHtml = true;
                 mail.To.Add(user.Email);
-                mail.From = new MailAddress("bookshopping12@gmail.com", "Şifre Güncelleme", System.Text.Encoding.UTF8);
+                mail.From = new MailAddress(email, "Şifre Güncelleme", System.Text.Encoding.UTF8);
                 mail.Subject = "Şifre Güncelleme Talebi";
                 mail.Body = $"<a target=\"_blank\" href=\"https://localhost:44370{Url.Action("EditPassword", "Security", new { Id = user.Id, token = HttpUtility.UrlEncode(token) })}\">Yeni şifre talebi için tıklayınız</a>";
                 mail.IsBodyHtml = true;
 
                 SmtpClient smp = new SmtpClient();
-                smp.Credentials = new NetworkCredential("bookshopping12@gmail.com", "book5734");
+                smp.Credentials = new NetworkCredential(email, password);
                 smp.Port = 587;
-                smp.Host = "smtp.gmail.com";
+                smp.Host = host;
                 smp.EnableSsl = true;
                 smp.Send(mail);
 
@@ -222,7 +234,27 @@ namespace BookShopping.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Security");
         }
+        //private string GenerateJSONWebToken(UserModel userInfo)
+        //{
+        //    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["MyConfig:Password"]));
+        //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        //    var _claims = new[] {
+        //        new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
+        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        //    };
+
+        //    var token = new JwtSecurityToken(
+        //      _configuration["Jwt:Issuer"],
+        //      _configuration["Jwt:Issuer"],
+        //      claims: _claims,
+        //      expires: DateTime.Now.AddMinutes(120),
+        //      signingCredentials: credentials);
+
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
+
 
     }
 }
-
+   
