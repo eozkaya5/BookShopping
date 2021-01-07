@@ -74,14 +74,24 @@
             </div>
         </div>
     </section>
-
-
+   
     <section id="slider">
         <!--slider-->
         <div class="container">
             <div class="row">
+              
                 <div class="col-sm-3">
+                    @using (Html.BeginForm("Search", "Product", FormMethod.Get))
+                    {
+                        <div class="col-6">
+                            <div >
+                                <input class="form-control" type="text" name="search" placeholder="Ara" />
+                            </div>
+                        </div>
+                    }
                     <div class="left-sidebar">
+
+                        <hr />
                         <h2>Kategoriler</h2>
                         <div class="panel-group category-products" id="accordian">
                             <!--category-productsr-->
@@ -97,13 +107,13 @@
                         </div><!--/category-products-->
                     </div>
                 </div>
-                <form asp-controller="Product" asp-action="List" method="post">
+                <div class="col-sm-9 padding-right">
+                    <div class="features_items">
+                        <!--features_items-->
 
-                    <div class="col-sm-9 padding-right">
-                        <div class="features_items">
-                            <!--features_items-->
-                            <h2 class="title text-center">Ürünler</h2>
+                        <h2 class="title text-center">Ürünler</h2>
 
+                        <form asp-controller="Product" asp-action="List" method="post">
                             @foreach (var item in Model.HomePage)
                             {
                                 <div class="col-sm-4">
@@ -128,9 +138,10 @@
                                     </div>
                                 </div>
                             }
-                        </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+
             </div>
         </div>
     </section>
