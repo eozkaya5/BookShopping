@@ -23,7 +23,6 @@ namespace BookShopping.Controllers
             _logger = logger;
             _context = context;
         }
-
         public IActionResult Index()
         {
             ViewBag.UserName = User.Identity.Name;
