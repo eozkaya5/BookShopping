@@ -1,18 +1,11 @@
 ﻿@model IEnumerable<BookShopping.Models.ShoppingModel.Product>
 <hr />
 <div class="recommended_items">
-    <h2 class="title text-center">ÜRÜNLER</h2>
+    <h2 class="title text-center">Arama Sonucu</h2>
 </div>
-@using (Html.BeginForm("Search", "Product", FormMethod.Get))
-{
-    <div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" name="search" placeholder="Ara" />
-        </div>
-    </div>
-}
-<hr />
-<form asp-controller="Product" asp-action="List" method="post">
+@TempData["Error"]
+
+<form asp-controller="Product" asp-action="Search" method="post">
     <div class="table-responsive cart_info">
         <table class="table table-condensed">
             <thead>
