@@ -23,9 +23,6 @@ namespace BookShopping.Controllers
 
     public class ProductController : Controller
     {
-
-        #region Ürün; ekle,sil düzenle listele
-
         readonly Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager;
         readonly IWebHostEnvironment _environment;
         public readonly ShoppingDbContext _context;
@@ -43,7 +40,7 @@ namespace BookShopping.Controllers
             List<Product> model = _context.Products.Where(x => x.Id == id).ToList();
             ViewBag.CategoryId = id;
             return View(model);
-        }     
+        }
 
         public IActionResult Index(int id)
         {
@@ -57,7 +54,21 @@ namespace BookShopping.Controllers
         {
             ViewBag.UserName = User.Identity.Name;
             List<Product> model = _context.Products.Include(x => x.Category).Where(x => x.CategoryId == id).ToList();
+
             return View(model);
+
+        }
+
+        public IActionResult Search(string search)
+        {
+            ViewBag.UserName = User.Identity.Name;
+            var product = from model in _context.Products
+                          select model;
+            if (!String.IsNullOrEmpty(search))
+            {
+                product = product.Where(x => x.Name.Contains(search));
+            }
+            return View(product.ToList());
         }
 
         [HttpGet]
@@ -86,7 +97,7 @@ namespace BookShopping.Controllers
                     _context.Products.Add(shopping);
                     TempData["Create"] = shopping.Name + "  " + " ürün eklendi.";
                     _context.SaveChanges();
-                    return RedirectToAction("Index",new { id = shopping.CategoryId });
+                    return RedirectToAction("Index", new { id = shopping.CategoryId });
                 }
             }
             catch (Exception)
@@ -104,22 +115,11 @@ namespace BookShopping.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", new { id = delete.CategoryId });
         }
-
-        public IActionResult Select(string search)
-        {
-            var model = _context.Products.ToList();
-            if (!string.IsNullOrEmpty(search))
-            {
-                model = model.Where(x => x.Name.Contains(search)).ToList();
-            }
-            return RedirectToAction("HomeProduct", model);
-        }
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
             ViewBag.UserName = User.Identity.Name;
-            var model = _context.Products.FirstOrDefault(x => x.Id == id); 
+            var model = _context.Products.FirstOrDefault(x => x.Id == id);
             return View(model);
         }
 
@@ -143,7 +143,7 @@ namespace BookShopping.Controllers
                     model.Comment = product.Comment;
                     model.Quantity = product.Quantity;
                     model.PictureWay = product.PictureWay;
-                   
+
                     _context.SaveChanges();
                     return RedirectToAction("Index", new { id = model.CategoryId });
                 }
@@ -151,20 +151,12 @@ namespace BookShopping.Controllers
             catch (Exception)
             {
 
-                
+
             }
             return View(product);
         }
 
-        //public IActionResult Status(int id)
-        //{
-        //    var product = _context.Products.Find(id);
-        //    product.Status = !product.Status;
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index", new { id = product.CategoryId });
-        ////}
-        #endregion
-               
     }
+
 }
 
